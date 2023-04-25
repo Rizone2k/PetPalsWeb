@@ -3,6 +3,10 @@
 @tailwind utilities;
 
 /* reset code */
+html {
+  font-family: 'Mali', cursive;
+}
+
 *,
 *:before,
 *:after {
@@ -12,7 +16,6 @@
 * {
   margin: 0;
   padding: 0;
-  font: inherit;
 }
 
 img,
@@ -34,11 +37,10 @@ button {
   cursor: pointer;
   background-color: transparent;
   outline: none;
-  border: 0;
 }
 
 body a {
-  transition: 0.5s all;
+  -ms-transition: 0.5s all;
   -webkit-transition: 0.5s all;
   -moz-transition: 0.5s all;
   -o-transition: 0.5s all;
@@ -65,8 +67,6 @@ input[type="button"], input[type="submit"] {
 h1, h2, h3, h4, h5, h6 {
   margin: 0;
   padding: 0;
-  text-align: center;
-  font-family: 'Raleway', sans-serif;
 }
 
 p {
@@ -76,6 +76,7 @@ p {
 ul {
   margin: 0;
   padding: 0;
+  list-style-type: none;
 }
 
 label {
@@ -91,45 +92,4 @@ a:focus, a:hover {
   outline: none;
 }
 
-
 /* End reset */
-
-.App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-
-  to {
-    transform: rotate(360deg);
-  }
-}

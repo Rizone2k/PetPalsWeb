@@ -1,0 +1,8 @@
+.alert-show {
+  opacity: 1;
+  transition: opacity 5s ease-out;
+}
+
+.alert-show.hidden {
+  opacity: 0;
+}

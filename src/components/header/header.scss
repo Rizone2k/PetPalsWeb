@@ -1,0 +1,56 @@
+@import "../../scss";
+
+.border-nav-top {
+  border-color: rgba(232, 41, 21, 1);
+  &_logo {
+    font-size: 30px;
+    color: rgb(20, 9, 1);
+  }
+}
+
+nav {
+  transition: position 2s ease-in-out;
+  will-change: position;
+}
+
+.sticked {
+  position: sticky;
+  top: 0;
+  left: 0;
+  background-color: rgb(252, 238, 231);
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  transition: padding 1s;
+}
+
+.dropdown:hover .dropdown-menu {
+  display: block;
+}
+
+.notice-bell::after {
+  content: "";
+  position: absolute;
+  top: 30%;
+  right: 0px;
+  transform: translateY(-50%);
+  width: 6px;
+  height: 6px;
+  background-color: red;
+  border-radius: 50%;
+}
+
+.nav-btn {
+  display: none;
+  opacity: 0;
+}
+
+@include mobile {
+  .nav-btn {
+    display: block;
+    opacity: 1;
+  }
+  .navbar-pc {
+    display: none;
+  }
+}
