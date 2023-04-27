@@ -10,7 +10,7 @@
   );
   @keyframes slide-text {
     0% {
-      transform: translateX(-100%);
+      transform: translateX(-50%);
     }
     100% {
       transform: translateX(0);
@@ -18,17 +18,17 @@
   }
   @keyframes slide-img {
     0% {
-      transform: translateX(100%);
+      transform: translateX(50%);
     }
     100% {
-      transform: translateX(0);
+      transform: translateX(0%);
     }
   }
   .img-banner {
-    animation: slide-img 1s ease forwards;
+    animation: slide-img 2s ease forwards;
   }
   .text-banner {
-    animation: slide-text 1s ease forwards;
+    animation: slide-text 2s ease forwards;
   }
   clip-path: ellipse(80% 100% at top center);
   // @include tablet {
