@@ -1,5 +1,8 @@
 import React from "react";
-
-const dog = (props) => <h1> dog </h1>;
-
-export default dog;
+export default function Dog(props) {
+  return (
+    <div>
+      <h1>cat</h1>
+    </div>
+  );
+}

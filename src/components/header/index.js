@@ -71,27 +71,21 @@ function Header() {
         {/* Show for PC */}
         <div className="w-4/6 navbar-pc flex flex-row items-center justify-between">
           <ul className=" w-4/6 sm:w-5/6 flex flex-row items-center justify-around mr-10 ">
-            <Tooltip content="Home">
-              <li>
-                <Link to="/">
-                  <b>Trang chủ</b>
-                </Link>
-              </li>
-            </Tooltip>
-            <Tooltip content="Chó">
-              <li>
-                <Link to="/dog">
-                  <b>Chó</b>
-                </Link>
-              </li>
-            </Tooltip>
-            <Tooltip content={<h2>Tooltip</h2>}>
-              <li>
-                <Link to="/cat">
-                  <b>Mèo</b>
-                </Link>
-              </li>
-            </Tooltip>
+            <li>
+              <Link to="/">
+                <b>Trang chủ</b>
+              </Link>
+            </li>
+            <li>
+              <Link to="/dog">
+                <b>Chó</b>
+              </Link>
+            </li>
+            <li>
+              <Link to="/cat">
+                <b>Mèo</b>
+              </Link>
+            </li>
             <li>
               <div className="dropdown inline-block relative">
                 <button className="py-2 rounded inline-flex items-center">

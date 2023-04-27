@@ -35,3 +35,33 @@
   //   box-shadow: blue 10px 10px 10px 10px;
   // }
 }
+
+.circle {
+  &_1 {
+    position: absolute;
+    left: 40%;
+    bottom: -10%;
+    width: 8rem;
+    height: 8rem;
+    border-radius: 100rem;
+    background: rgba(217, 217, 217, 0.1);
+  }
+  &_2 {
+    position: absolute;
+    left: 15%;
+    top: 20%;
+    width: 10rem;
+    height: 10rem;
+    border-radius: 100rem;
+    background: rgba(217, 217, 217, 0.1);
+  }
+  &_3 {
+    position: absolute;
+    right: 0%;
+    top: -10%;
+    width: 11rem;
+    height: 11rem;
+    border-radius: 100rem;
+    background: rgba(217, 217, 217, 0.1);
+  }
+}

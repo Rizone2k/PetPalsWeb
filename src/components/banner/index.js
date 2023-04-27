@@ -5,11 +5,14 @@ import { Link } from "react-router-dom";
 
 function Banner(props) {
   return (
-    <div className="parabolic-shape pb-5">
+    <div className="parabolic-shape pb-5 relative">
+      <span className="circle_1"></span>
+      <span className="circle_2"></span>
+      <span className="circle_3"></span>
       <div className="flex flex-row items-center h-full">
         <div className="w-1/6"></div>
-        <div className="w-2/6 flex flex-col justify-center items-end text-banner">
-          <h4 className="xl:text-4xl lg:text-2lx py-2">
+        <div className="w-2/6 flex flex-col justify-center items-start text-banner">
+          <h4 className="xl:text-4xl lg:text-3xl py-2">
             Adopt cậu vàng, mồn lèo
           </h4>
           <h2 className="xl:text-5xl lg:text-3lx font-extrabold py-2">
@@ -20,7 +23,7 @@ function Banner(props) {
             <Link to={"/cat"}>
               <Button
                 type={"button"}
-                className={`btn-outline btn text-xs sm:text-sm md:text-lg `}
+                className={`btn-outline btn text-xs md:text-sm`}
                 onClick={null}
               >
                 Xem Ngay

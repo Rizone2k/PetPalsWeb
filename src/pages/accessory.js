@@ -1,5 +1,5 @@
 import React from "react";
 
-const accessory = (props) => <h1> accessory </h1>;
-
-export default accessory;
+export default function accessory(props) {
+  return <h1> accessory </h1>;
+}
