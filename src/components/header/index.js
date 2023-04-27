@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { Tooltip } from "react-tippy";
-import "react-tippy/dist/tippy.css";
+import Tippy, { tippy } from "@tippyjs/react/headless";
+import Tooltip from "@tippyjs/react";
+import "tippy.js/dist/tippy.css";
+import Modal from "../modals";
 import {
   FaBars,
   FaEllipsisV,
@@ -14,15 +16,20 @@ import "./header.scss";
 
 function Header() {
   const [navbar, setNavbar] = useState(false);
-  const [tooltipContent, setTooltipContent] = useState(false);
+  const [showSearch, setShowSearch] = useState(false);
   const [navbarShow, setNavbarShow] = useState(false);
-  console.log("------------------------------------");
-  console.log(navbarShow);
-  console.log("------------------------------------");
 
   const showNavbar = () => {
     setNavbarShow(!navbarShow);
   };
+  const handleShowSearch = () => {
+    setShowSearch(!showSearch);
+  };
+
+  tippy("button", {
+    content: "Global content",
+    trigger: "click",
+  });
 
   useEffect(() => {
     const handleScroll = () => {
@@ -34,24 +41,21 @@ function Header() {
 
   return (
     <>
-      <Tooltip
-        html={
-          <div>
-            <p>{tooltipContent}</p>
-            <input
-              type="text"
-              value={tooltipContent}
-              onChange={(e) => {
-                setTooltipContent(e.target.value);
-              }}
-            />
+      {showSearch ? (
+        <Modal show={showSearch} title={"Tìm kiếm"}>
+          <div className="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">
+            <button
+              className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+              type="button"
+              onClick={() => handleShowSearch(false)}
+            >
+              Close
+            </button>
           </div>
-        }
-        position="bottom"
-        trigger="click"
-      >
-        <p>Click here to show popup</p>
-      </Tooltip>
+        </Modal>
+      ) : (
+        ""
+      )}
       <nav
         className={`${
           navbar ? "sticked" : ""
@@ -66,22 +70,22 @@ function Header() {
         <ul className="w-1/6 lg:w-2/6"></ul>
         {/* Show for PC */}
         <div className="w-4/6 navbar-pc flex flex-row items-center justify-between">
-          <ul className=" w-4/6 sm:w-5/6 flex flex-row items-center justify-between mr-10 ">
-            <Tooltip title="Home" position="bottom" trigger="mouseenter">
+          <ul className=" w-4/6 sm:w-5/6 flex flex-row items-center justify-around mr-10 ">
+            <Tooltip content="Home">
               <li>
                 <Link to="/">
-                  <b>Home</b>
+                  <b>Trang chủ</b>
                 </Link>
               </li>
             </Tooltip>
-            <Tooltip title="Chó" position="bottom" trigger="mouseenter">
+            <Tooltip content="Chó">
               <li>
-                <Link to="/about">
+                <Link to="/dog">
                   <b>Chó</b>
                 </Link>
               </li>
             </Tooltip>
-            <Tooltip title="Mèo" position="bottom" trigger="mouseenter">
+            <Tooltip content={<h2>Tooltip</h2>}>
               <li>
                 <Link to="/cat">
                   <b>Mèo</b>
@@ -102,58 +106,68 @@ function Header() {
                     <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />{" "}
                   </svg>
                 </button>
-                <ul className="bg-slate-100 dropdown-menu hidden absolute rounded">
-                  <li className="">
-                    <a
-                      className="rounded-t py-2 px-4 block whitespace-no-wrap"
-                      href="/"
-                    >
-                      One
-                    </a>
-                  </li>
-                  <li className="">
-                    <a className="py-2 px-4 block whitespace-no-wrap" href="/">
-                      Two
-                    </a>
-                  </li>
-                  <li className="">
-                    <a
-                      className="rounded-b py-2 px-4 block whitespace-no-wrap"
-                      href="/"
-                    >
-                      Three
-                    </a>
-                  </li>
+                <ul className="bg-slate-100 dropdown-menu hidden absolute rounded px-2 py-2">
+                  <Link to={"/accessory/cat"}>
+                    <li className="py-2 px-4 block whitespace-no-wrap border-b border-[#f0bb7e]">
+                      Cat
+                    </li>
+                  </Link>
+                  <Link to={"/accessory/dog"}>
+                    <li className="py-2 px-4 block whitespace-no-wrap border-b border-[#f0bb7e]">
+                      dog
+                    </li>
+                  </Link>
                 </ul>
               </div>
             </li>
-            <Tooltip title="Thức ăn" position="bottom" trigger="mouseenter">
-              <li>
-                <Link to="/cat">
-                  <b>Thức ăn</b>
-                </Link>
-              </li>
-            </Tooltip>
+            <li>
+              <div className="dropdown inline-block relative">
+                <button className="py-2 rounded inline-flex items-center">
+                  <span className="mr-1">
+                    <b>Thức ăn</b>
+                  </span>
+                  <svg
+                    className="fill-current h-4 w-4"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 20 20"
+                  >
+                    <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />{" "}
+                  </svg>
+                </button>
+                <ul className="bg-slate-100 dropdown-menu hidden absolute rounded px-2 py-2">
+                  <Link to={"/food/cat"}>
+                    <li className="py-2 px-4 block whitespace-no-wrap border-b border-[#f0bb7e]">
+                      Cat
+                    </li>
+                  </Link>
+                  <Link to={"/food/dog"}>
+                    <li className="py-2 px-4 block whitespace-no-wrap border-b border-[#f0bb7e]">
+                      dog
+                    </li>
+                  </Link>
+                </ul>
+              </div>
+            </li>
           </ul>
           <ul className="w-1/6 sm:w-2/6 flex flex-row items-center justify-around">
-            <Tooltip title="Search" position="bottom" trigger="mouseenter">
-              <li>
+            <Tooltip content="Search">
+              <li className="cursor-pointer" onClick={handleShowSearch}>
                 <FaSearch />
               </li>
             </Tooltip>
-            <Tooltip title="Notices" position="bottom" trigger="mouseenter">
-              <li className="relative inline-block">
+            <Tooltip content="Notices">
+              <li className="relative inline-block cursor-pointer">
                 <div className="notice-bell">
                   <FaRegBell />
                 </div>
               </li>
             </Tooltip>
-            <Tooltip title="Profile" position="bottom" trigger="mouseenter">
-              <li>
+            <Tooltip content="Profile">
+              <li className="cursor-pointer">
                 <FaUserCircle />
               </li>
             </Tooltip>
-            <li>
+            <li className="cursor-pointer">
               <FaEllipsisV />
             </li>
           </ul>
@@ -281,7 +295,6 @@ function Header() {
               </div>
             </div>
           </div>
-          <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
         </div>
         <div className="w-2/6 lg:hidden md:hidden sm:hidden flex justify-end items-center ">
           <button className="nav-btn " onClick={showNavbar}>
