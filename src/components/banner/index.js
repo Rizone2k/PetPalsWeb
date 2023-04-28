@@ -11,7 +11,7 @@ function Banner(props) {
       <span className="circle_3"></span>
       <div className="flex flex-row items-center h-full">
         <div className="w-1/6"></div>
-        <div className="w-2/6 flex flex-col justify-center items-start text-banner">
+        <div className="w-3/6 flex flex-col justify-center items-start text-banner">
           <h4 className="xl:text-4xl lg:text-3xl py-2">
             Adopt cậu vàng, mồn lèo
           </h4>
@@ -31,7 +31,7 @@ function Banner(props) {
             </Link>
           </div>
         </div>
-        <div className="w-2/6 flex flex-row items-center justify-center py-5 img-banner">
+        <div className="w-3/6 flex flex-row items-center justify-center py-5 img-banner">
           <img
             className="h-auto"
             width={"63%"}

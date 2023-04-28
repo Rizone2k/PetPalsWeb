@@ -10,7 +10,7 @@ export default function Home(props) {
     <div className="">
       <Banner></Banner>
       <Title title={"Thú cưng và các phụ kiện"}></Title>
-      <div className="flex flex-row justify-around items-center gap-5 py-5 px-12">
+      <div className="flex flex-row justify-around items-center gap-5 py-5 px-2 lg:px-12">
         <AdsCard
           title={"Chó"}
           content={

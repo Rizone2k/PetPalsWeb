@@ -3,7 +3,7 @@ import React from "react";
 export default function Card(props) {
   return (
     <>
-      <div className=" my-1 px-1 w-full sm:w-1/2 md:w-1/3 lg:my-4 lg:px-4 lg:w-1/4 2xl:w-1/5">
+      <div className="my-1 px-20 sm:px-5 w-full sm:w-1/2 md:w-1/3 lg:my-4 lg:px-4 lg:w-1/4 2xl:w-1/5">
         <article className="overflow-hidden rounded-lg shadow-lg h-full">
           <a className="" href="/">
             <img
