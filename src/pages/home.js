@@ -4,7 +4,7 @@ import Banner from "~/components/banner";
 import Title from "./components/titles";
 import AdsCard from "./components/adsCard";
 import Card from "./components/card";
-import petPalsAPI from "../API/petPalsAPI";
+import PetPalsAPI from "~/API/petPalsAPI";
 
 export default function Home(props) {
   const [itemDog, setItemDog] = useState([]);
@@ -14,7 +14,7 @@ export default function Home(props) {
     const getDog = async (category, pet) => {
       try {
         const param = category;
-        const response = await petPalsAPI.getPetList(param);
+        const response = await PetPalsAPI.getPetList(param);
         pet(response.data.data);
         window.scrollTo(0, 0);
       } catch (error) {

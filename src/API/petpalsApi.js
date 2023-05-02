@@ -1,6 +1,6 @@
 import instance from "./axios.config";
 
-const petPalsAPI = {
+const PetPalsAPI = {
   // &limit=2&page=1
   // lever 1 - Pet
   // For navigation, get pet (dog or cat, dependent on id(param))
@@ -77,4 +77,4 @@ const petPalsAPI = {
   //   },
 };
 
-export default petPalsAPI;
+export default PetPalsAPI;
