@@ -5,6 +5,7 @@ import Title from "./components/titles";
 import AdsCard from "./components/adsCard";
 import Card from "./components/card";
 import PetPalsAPI from "~/API/petPalsAPI";
+// push to redeploy
 
 export default function Home(props) {
   const [itemDog, setItemDog] = useState([]);
