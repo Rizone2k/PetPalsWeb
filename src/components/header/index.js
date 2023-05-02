@@ -5,11 +5,17 @@ import Tooltip from "@tippyjs/react";
 import "tippy.js/dist/tippy.css";
 import {
   FaBars,
+  FaCat,
+  FaDog,
   FaEllipsisV,
+  FaGifts,
+  FaHome,
+  FaHotdog,
   FaRegBell,
   FaSearch,
   FaTimes,
   FaUserCircle,
+  FaAngleDoubleRight,
 } from "react-icons/fa";
 import "./header.scss";
 
@@ -47,14 +53,14 @@ function Header() {
               {/*content*/}
               <div className="mx-auto border-0 rounded-lg shadow-lg relative flex flex-col w-2/3 lg:w-1/2 bg-[#ffefe1] outline-none focus:outline-none py-12 px-5">
                 {/*header*/}
-                <div className="flex flex-wrap items-center gap-5 justify-start p-5 border-b border-solid border-slate-200 rounded-t">
-                  <h3 className="text-3xl font-semibold">
+                <div className="flex flex-row items-center border-red-100 border-2 rounded-lg w-full lg:w-4/5 px-2">
+                  <h3 className="text-base pr-1 lg:text-2xl font-semibold opacity-60">
                     <FaSearch></FaSearch>
                   </h3>
                   <input
                     type="text"
                     placeholder="Search"
-                    className="border-2 rounded-md border-orange-200 w-full max-w-xs px-5 py-2"
+                    className="border-none max-w-xs lg:px-5 py-2"
                   />
                   <button
                     className="text-xl absolute right-0 top-0 text-red-500 font-bold uppercase px-2 lg:px-6 py-2"
@@ -65,10 +71,10 @@ function Header() {
                   </button>
                 </div>
                 {/*body*/}
-                <div className="relative p-6 flex-auto overflow-auto max-h-80">
+                <div className="relative md:p-6 flex-auto overflow-auto max-h-80">
                   <p> Recent</p>
                   <ul className="flex flex-col gap-3">
-                    <li className="py-3 px-2 rounded-md bg-[#89440308]">
+                    <li className="py-3 px-2 rounded-md bg-[#89440308] hover:bg-orange-200">
                       <div className="flex flex-row items-center gap-3">
                         <img
                           className="rounded"
@@ -79,7 +85,7 @@ function Header() {
                         <p> chó mèo gà vịt</p>
                       </div>
                     </li>
-                    <li className="py-3 px-2 rounded-md bg-[#89440308]">
+                    <li className="py-3 px-2 rounded-md bg-[#89440308] hover:bg-orange-200">
                       <div className="flex flex-row items-center gap-3">
                         <img
                           className="rounded"
@@ -90,7 +96,7 @@ function Header() {
                         <p> chó mèo gà vịt</p>
                       </div>
                     </li>
-                    <li className="py-3 px-2 rounded-md bg-[#89440308]">
+                    <li className="py-3 px-2 rounded-md bg-[#89440308] hover:bg-orange-200">
                       <div className="flex flex-row items-center gap-3">
                         <img
                           className="rounded"
@@ -126,7 +132,7 @@ function Header() {
         {/* Show for PC */}
         <div className="w-4/6 navbar-pc flex flex-row items-center justify-between">
           <ul className=" w-4/6 sm:w-5/6 flex flex-row items-center justify-around mr-10 ">
-            <li>
+            <li className="md:text-base">
               <Link to="/">
                 <b>Trang chủ</b>
               </Link>
@@ -223,123 +229,99 @@ function Header() {
         </div>
         {/* show for mobile */}
         <div className={`${navbarShow ? "navbar-show nav-btn" : "hidden"}`}>
-          <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
-            <div className="relative w-auto my-6 mx-auto max-w-3xl">
+          <div className=" justify-end items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 ">
+            <div className="relative w-1/2 sm:w-2/5 my-6 max-w-3xl h-full ">
               {/*content*/}
-              <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
+              <div className="h-full border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-orange-100">
                 {/*header*/}
-                <div className="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
-                  <h3 className="text-3xl font-semibold">Modal Title</h3>
-                  <button
-                    className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
-                    onClick={showNavbar}
-                  >
-                    <span className="bg-transparent text-black opacity-5 h-6 w-6 text-2xl block outline-none focus:outline-none">
-                      ×
-                    </span>
-                  </button>
-                </div>
+                <button
+                  className="p-1 mr-auto border-0 float-right text-3xl"
+                  onClick={showNavbar}
+                >
+                  <span className=" text-red-600 h-6 w-10 text-2xl">
+                    <FaAngleDoubleRight></FaAngleDoubleRight>{" "}
+                  </span>
+                </button>
                 {/*body*/}
-                <div className="relative p-6 flex-auto">
-                  <ul className="w-2/6">
+                <div className="relative px-6 flex-auto ul-nav-show">
+                  <ul className="gap-5 w-full p-2">
                     <li onClick={handleShowSearch}>
-                      <FaSearch />
+                      <FaSearch /> <b>Search</b>
                     </li>
 
                     <li>
-                      <FaRegBell />
+                      <FaRegBell /> <b>Notices</b>
                     </li>
 
                     <li>
-                      <FaUserCircle />
+                      <FaUserCircle /> <b>Profile</b>
                     </li>
                     <li>
-                      <FaEllipsisV />
+                      <FaEllipsisV /> <b>Setting</b>
                     </li>
-                  </ul>
-                  <div className="flex justify-center items-center">
-                    <ul className=" w-4/6">
+                    <Link to="/">
                       <li>
-                        <Link to="/">
-                          <b>Home</b>
-                        </Link>
+                        <FaHome></FaHome>
+                        <b>Home</b>
                       </li>
+                    </Link>
+                    <Link to="/about">
                       <li>
-                        <Link to="/about">
-                          <b>Chó</b>
-                        </Link>
+                        <FaDog></FaDog> <b>Chó</b>
                       </li>
+                    </Link>
+                    <Link to="/cat">
                       <li>
-                        <Link to="/cat">
-                          <b>Mèo</b>
-                        </Link>
+                        <FaCat></FaCat>
+                        <b>Mèo</b>
                       </li>
-                      <li>
-                        <div className="dropdown inline-block relative">
-                          <button className="py-2 rounded inline-flex items-center">
-                            <span className="mr-1">
-                              <b>Phụ kiện</b>
-                            </span>
-                            <svg
-                              className="fill-current h-4 w-4"
-                              xmlns="http://www.w3.org/2000/svg"
-                              viewBox="0 0 20 20"
+                    </Link>
+                    <li>
+                      <div className="dropdown relative flex flex-row">
+                        <button className="py-2 rounded inline-flex items-center">
+                          <FaGifts></FaGifts> <b>Phụ kiện</b>
+                          <svg
+                            className="fill-current h-4 w-4"
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 20 20"
+                          >
+                            <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />{" "}
+                          </svg>
+                        </button>
+                        <ul className="bg-slate-100 dropdown-menu hidden absolute rounded">
+                          <li className="">
+                            <a
+                              className="rounded-t py-2 px-4 block whitespace-no-wrap"
+                              href="/"
                             >
-                              <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />{" "}
-                            </svg>
-                          </button>
-                          <ul className="bg-slate-100 dropdown-menu hidden absolute rounded">
-                            <li className="">
-                              <a
-                                className="rounded-t py-2 px-4 block whitespace-no-wrap"
-                                href="/"
-                              >
-                                One
-                              </a>
-                            </li>
-                            <li className="">
-                              <a
-                                className="py-2 px-4 block whitespace-no-wrap"
-                                href="/"
-                              >
-                                Two
-                              </a>
-                            </li>
-                            <li className="">
-                              <a
-                                className="rounded-b py-2 px-4 block whitespace-no-wrap"
-                                href="/"
-                              >
-                                Three
-                              </a>
-                            </li>
-                          </ul>
-                        </div>
-                      </li>
+                              One
+                            </a>
+                          </li>
+                          <li className="">
+                            <a
+                              className="py-2 px-4 block whitespace-no-wrap"
+                              href="/"
+                            >
+                              Two
+                            </a>
+                          </li>
+                          <li className="">
+                            <a
+                              className="rounded-b py-2 px-4 block whitespace-no-wrap"
+                              href="/"
+                            >
+                              Three
+                            </a>
+                          </li>
+                        </ul>
+                      </div>
+                    </li>
+                    <Link to="/cat">
                       <li>
-                        <Link to="/cat">
-                          <b>Thức ăn</b>
-                        </Link>
+                        <FaHotdog></FaHotdog> <b>Thức ăn</b>
                       </li>
-                    </ul>
-                  </div>
-                </div>
-                {/*footer*/}
-                <div className="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">
-                  <button
-                    className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                    type="button"
-                    onClick={showNavbar}
-                  >
-                    Close
-                  </button>
-                  <button
-                    className="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                    type="button"
-                    onClick={showNavbar}
-                  >
-                    Save Changes
-                  </button>
+                    </Link>
+                  </ul>
                 </div>
               </div>
             </div>

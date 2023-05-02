@@ -54,4 +54,22 @@ nav {
   .navbar-pc {
     display: none;
   }
+  .ul-nav-show ul li {
+    color: rgb(54, 30, 1);
+    font-size: 0.9rem;
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 1rem;
+    padding: 0.5rem;
+    align-items: center;
+    b {
+      margin-left: 1rem;
+    }
+  }
+}
+
+@include tablet {
+  .navbar-pc ul li {
+    font-size: 12px;
+  }
 }

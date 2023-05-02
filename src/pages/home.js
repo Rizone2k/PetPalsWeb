@@ -1,11 +1,29 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./home.scss";
 import Banner from "~/components/banner";
 import Title from "./components/titles";
 import AdsCard from "./components/adsCard";
 import Card from "./components/card";
+import petPalsAPI from "../API/petPalsAPI";
 
 export default function Home(props) {
+  const [itemDog, setItemDog] = useState([]);
+  const [itemCat, setItemCat] = useState([]);
+  console.log(itemDog);
+  useEffect(() => {
+    const getDog = async (category, pet) => {
+      try {
+        const param = category;
+        const response = await petPalsAPI.getPetList(param);
+        pet(response.data.data);
+        window.scrollTo(0, 0);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getDog("6416ee5c33df1b92e7fb8351", setItemDog);
+    getDog("6416ee6433df1b92e7fb8354", setItemCat);
+  }, []);
   return (
     <div className="">
       <Banner></Banner>
@@ -42,101 +60,36 @@ export default function Home(props) {
       <Title title={"Chó"}></Title>
       <div className="max-w-screen-xl my-0 mx-auto">
         <div className="flex flex-wrap -mx-1 lg:-mx-1">
-          <Card
-            src={
-              "https://images.unsplash.com/photo-1543466835-00a7907e9de1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8ZG9nfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60"
-            }
-            name={"Cẩu lương"}
-            form={"Bình Dương"}
-            age={"102"}
-            male={"Đực"}
-          ></Card>
-          <Card
-            src={
-              "https://images.unsplash.com/photo-1586671267731-da2cf3ceeb80?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8OHx8ZG9nfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60"
-            }
-            name={"Cẩu lương"}
-            form={"Bình Dương"}
-            age={"102"}
-            male={"Đực"}
-          ></Card>
-          <Card
-            src={
-              "https://images.unsplash.com/photo-1596492784531-6e6eb5ea9993?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTd8fGRvZ3xlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60"
-            }
-            name={"Cẩu lương"}
-            form={"Bình Dương"}
-            age={"102"}
-            male={"Đực"}
-          ></Card>
-          <Card
-            src={
-              "https://images.unsplash.com/photo-1583337130417-3346a1be7dee?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTR8fGRvZ3xlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60"
-            }
-            name={"Cẩu lương"}
-            form={"Bình Dương"}
-            age={"102"}
-            male={"Đực"}
-          ></Card>
-          <Card
-            src={
-              "https://images.unsplash.com/photo-1586671267731-da2cf3ceeb80?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8OHx8ZG9nfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60"
-            }
-            name={"Cẩu lương"}
-            form={"Bình Dương"}
-            age={"102"}
-            male={"Đực"}
-          ></Card>
+          {itemDog &&
+            itemDog.map((item) => {
+              console.log(item);
+              return (
+                <Card
+                  src={item.thumb}
+                  name={item.name}
+                  price={item.price}
+                  from={item.subcategory.name}
+                  age={item.subcategory.createdAt}
+                ></Card>
+              );
+            })}
         </div>
       </div>
       <Title title={"Mèo"}></Title>
       <div className="max-w-screen-xl my-0 mx-auto">
         <div className="flex flex-wrap -mx-1 lg:-mx-1">
-          <Card
-            src={
-              "https://images.unsplash.com/photo-1543466835-00a7907e9de1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8ZG9nfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60"
-            }
-            name={"Cẩu lương"}
-            form={"Bình Dương"}
-            age={"102"}
-            male={"Đực"}
-          ></Card>
-          <Card
-            src={
-              "https://images.unsplash.com/photo-1586671267731-da2cf3ceeb80?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8OHx8ZG9nfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60"
-            }
-            name={"Cẩu lương"}
-            form={"Bình Dương"}
-            age={"102"}
-            male={"Đực"}
-          ></Card>
-          <Card
-            src={
-              "https://images.unsplash.com/photo-1596492784531-6e6eb5ea9993?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTd8fGRvZ3xlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60"
-            }
-            name={"Cẩu lương"}
-            form={"Bình Dương"}
-            age={"102"}
-            male={"Đực"}
-          ></Card>
-          <Card
-            src={
-              "https://images.unsplash.com/photo-1583337130417-3346a1be7dee?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTR8fGRvZ3xlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60"
-            }
-            name={"Cẩu lương"}
-            form={"Bình Dương"}
-            age={"102"}
-            male={"Đực"}
-          ></Card>
-          <Card
-            src={
-              "https://images.unsplash.com/photo-1586671267731-da2cf3ceeb80?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8OHx8ZG9nfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60"
-            }
-            name={"Cẩu lương"}
-            form={"Bình Dương"}
-            age={"102"}
-            male={"Đực"}
-          ></Card>
+          {itemCat &&
+            itemCat.map((item) => {
+              return (
+                <Card
+                  src={item.thumb}
+                  name={item.name}
+                  price={item.price}
+                  from={item.subcategory.name}
+                  age={item.subcategory.createdAt}
+                ></Card>
+              );
+            })}
         </div>
       </div>
     </div>
