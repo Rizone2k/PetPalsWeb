@@ -26,10 +26,10 @@ const petPalsAPI = {
     const url = "category" + page;
     return instance.get(url);
   },
-  getProduct: (page) => {
-    const url = "product" + page;
-    return instance.get(url);
-  },
+  // getProduct: (page) => {
+  //   const url = "product" + page;
+  //   return instance.get(url);
+  // },
 
   // ~~~~~~~~~~~~~~Navigation~~~~~~~~~~~~~~~~//
   getItems: (param) => {
@@ -41,10 +41,10 @@ const petPalsAPI = {
     const url = "/pet/search?key=" + params + "&page=" + page;
     return instance.get(url);
   },
-  getPetList: (id, page = "1") => {
-    const url = "pet?category=" + id + "&page=" + page;
-    return instance.get(url);
-  },
+  // getPetList: (id, page = "1") => {
+  //   const url = "pet?category=" + id + "&page=" + page;
+  //   return instance.get(url);
+  // },
   //   getPetDetail: (id, page = "1") => {
   //     const url = "pet?category=" + id + "&page=" + page;
   //     return instance.get(url);

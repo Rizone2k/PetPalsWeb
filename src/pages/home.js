@@ -4,7 +4,7 @@ import Banner from "~/components/banner";
 import Title from "./components/titles";
 import AdsCard from "./components/adsCard";
 import Card from "./components/card";
-import petPalsAPI from "~/API/petPalsAPI";
+import petPalsAPI from "~/api/petPalsAPI";
 // push to redeploy
 
 export default function Home(props) {
