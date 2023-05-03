@@ -4,7 +4,7 @@ import Banner from "~/components/banner";
 import Title from "./components/titles";
 import AdsCard from "./components/adsCard";
 import Card from "./components/card";
-// import petPalsAPI from "../api/petPalsAPI";
+import petPalsAPI from "../api/petPalsAPI";
 // push to redeploy
 
 export default function Home(props) {
@@ -15,8 +15,8 @@ export default function Home(props) {
     const getDog = async (category, pet) => {
       try {
         const param = category;
-        // const response = await petPalsAPI.getPetList(param);
-        // pet(response.data.data);
+        const response = await petPalsAPI.getPetList(param);
+        pet(response.data.data);
         window.scrollTo(0, 0);
       } catch (error) {
         console.log(error);
