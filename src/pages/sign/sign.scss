@@ -1,0 +1,9 @@
+.bg-sign {
+  background-image: url("../../assets/bg-sign.jpg");
+  background-size: cover;
+  background-position: center bottom;
+  opacity: 0.91;
+  .active {
+    border-bottom: 2px solid #ffa704;
+  }
+}

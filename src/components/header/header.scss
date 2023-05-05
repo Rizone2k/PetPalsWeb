@@ -27,6 +27,11 @@ nav {
 
 .dropdown:hover .dropdown-menu {
   display: block;
+  transition-delay: 2s;
+}
+.dropdown ul li:hover > ul {
+  display: inherit;
+  transition-delay: 2s;
 }
 
 .notice-bell::after {

@@ -2,7 +2,10 @@ import React from "react";
 
 function Footer() {
   return (
-    <footer aria-label="Site Footer" className="bg-orange-500 text-white">
+    <footer
+      aria-label="Site Footer"
+      className="bg-gradient-to-b from-[#dd7f0486] to-[#e6810ec2] text-white"
+    >
       <div className="max-w-screen-xl px-4 pt-10 pb-8 mx-auto sm:px-6 lg:px-8 lg:pt-16">
         <div className="text-center">
           <h2 className="text-3xl font-extrabold sm:text-5xl">
@@ -16,7 +19,7 @@ function Footer() {
 
           <a
             href="/"
-            className="inline-block px-12 py-3 mt-8 text-sm font-medium  border border-white rounded-full hover:bg-indigo-600 hover:text-white focus:outline-none focus:ring active:bg-orange-800"
+            className="inline-block px-12 py-3 mt-8 text-sm font-medium  border border-white rounded-full hover:bg-orange-400 hover:text-white focus:outline-none focus:ring active:bg-orange-800"
           >
             Get Started
           </a>

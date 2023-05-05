@@ -1,26 +1,29 @@
 import "./App.css";
-import { AlertDanger, AlertSuccess } from "./components/alerts";
+// import { AlertDanger, AlertSuccess } from "./components/alerts";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Header from "./components/header";
 import Footer from "./components/footer";
 import { SetRoutes } from "./routes";
+import React from "react";
 
 function App() {
   return (
-    <Router>
-      <Header></Header>
-      <div className="App">
-        <Routes>
-          {SetRoutes.map((route, index) => {
-            const Page = route.components;
-            return (
-              <Route exact key={index} path={route.path} element={<Page />} />
-            );
-          })}
-        </Routes>
-      </div>
-      <Footer></Footer>
-    </Router>
+    <React.StrictMode>
+      <Router>
+        <Header></Header>
+        <div className="App">
+          <Routes>
+            {SetRoutes.map((route, index) => {
+              const Page = route.components;
+              return (
+                <Route exact key={index} path={route.path} element={<Page />} />
+              );
+            })}
+          </Routes>
+        </div>
+        <Footer></Footer>
+      </Router>
+    </React.StrictMode>
   );
 }
 

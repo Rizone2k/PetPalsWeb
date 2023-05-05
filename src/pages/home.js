@@ -1,16 +1,18 @@
 import React, { useEffect, useState } from "react";
-import "./home.scss";
 import Banner from "~/components/banner";
 import Title from "./components/titles";
 import AdsCard from "./components/adsCard";
 import Card from "./components/card";
 import petPalsAPI from "../api/petPalsAPI";
+import Button from "~/components/button";
+import { Link } from "react-router-dom";
+import capitalizeAllWords from "./components/handleString";
+
 // push to redeploy
 
 export default function Home(props) {
   const [itemDog, setItemDog] = useState([]);
   const [itemCat, setItemCat] = useState([]);
-  console.log(itemDog);
   useEffect(() => {
     const getDog = async (category, pet) => {
       try {
@@ -59,15 +61,22 @@ export default function Home(props) {
         </AdsCard>
       </div>
       <Title title={"Chó"}></Title>
-      <div className="max-w-screen-xl my-0 mx-auto">
+      <div className="max-w-screen-xl mb-5 mx-auto">
         <div className="flex flex-wrap -mx-1 lg:-mx-1">
           {itemDog &&
             itemDog.map((item) => {
-              console.log(item);
+              function getRandomValue() {
+                const randomNumber = Math.random();
+                return randomNumber < 0.5 ? "Đực" : "Cái";
+              }
+              const randomValue = getRandomValue();
               return (
                 <Card
+                  key={item._id}
+                  id={item._id}
+                  sex={randomValue}
                   src={item.thumb}
-                  name={item.name}
+                  name={capitalizeAllWords(item.name)}
                   price={item.price}
                   from={item.subcategory.name}
                   age={item.subcategory.createdAt}
@@ -75,22 +84,48 @@ export default function Home(props) {
               );
             })}
         </div>
+        <div className="flex w-full justify-end items-end">
+          <Button
+            className="see-more bg-orange-200"
+            title="See more"
+            type={"button"}
+          >
+            <Link to={"/pet"}>Xem thêm {">>"}</Link>
+          </Button>
+        </div>
       </div>
       <Title title={"Mèo"}></Title>
-      <div className="max-w-screen-xl my-0 mx-auto">
+      <div className="max-w-screen-xl mb-5 mx-auto">
         <div className="flex flex-wrap -mx-1 lg:-mx-1">
           {itemCat &&
             itemCat.map((item) => {
+              function getRandomValue() {
+                const randomNumber = Math.random();
+                return randomNumber < 0.5 ? "Đực" : "Cái";
+              }
+              const randomValue = getRandomValue();
               return (
                 <Card
+                  key={item._id}
+                  id={item._id}
                   src={item.thumb}
-                  name={item.name}
+                  name={capitalizeAllWords(item.name)}
                   price={item.price}
                   from={item.subcategory.name}
+                  sex={randomValue}
                   age={item.subcategory.createdAt}
                 ></Card>
               );
             })}
+        </div>
+        <div className="flex w-full justify-end items-end">
+          <Button
+            className="see-more bg-orange-200"
+            title="See more"
+            type={"button"}
+          >
+            <Link to={"/pet"}>Xem thêm {">>"}</Link>
+          </Button>
         </div>
       </div>
     </div>

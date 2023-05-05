@@ -1,42 +1,32 @@
 import instance from "./axios.config";
 
 const petPalsAPI = {
+  getPetList: (param, limit = "20", page = "1") => {
+    const url = "pet?category=" + param + "&limit=" + limit + "&page=" + page;
+    return instance.get(url);
+  },
+
   // &limit=2&page=1
-  // lever 1 - Pet
-  // For navigation, get pet (dog or cat, dependent on id(param))
   getPet: (param) => {
     const url = "category/" + param;
     return instance.get(url);
   },
-
-  // lever 2 - item
-  // For navigation, get pet (dog or cat, dependent on id(param))
   getProduct: (param, limit = "20", page = "1") => {
     const url =
       "product?subitem=" + param + "&limit=" + limit + "&page=" + page;
     return instance.get(url);
   },
 
-  getPetList: (param, limit = "20", page = "1") => {
-    const url = "pet?category=" + param + "&limit=" + limit + "&page=" + page;
-    return instance.get(url);
-  },
-
-  getCategory: (page) => {
-    const url = "category" + page;
-    return instance.get(url);
-  },
-  // getProduct: (page) => {
-  //   const url = "product" + page;
-  //   return instance.get(url);
-  // },
-
   // ~~~~~~~~~~~~~~Navigation~~~~~~~~~~~~~~~~//
   getItems: (param) => {
-    const url = "items/" + param;
+    const url = "item/" + param;
     return instance.get(url);
   },
   // ~~~~~~~~~~~~~~Pet~~~~~~~~~~~~~~~~//
+  getDetailPet: (param) => {
+    const url = "pet/" + param;
+    return instance.get(url);
+  },
   searchPet: (params, page = "1") => {
     const url = "/pet/search?key=" + params + "&page=" + page;
     return instance.get(url);

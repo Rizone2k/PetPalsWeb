@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import Tippy, { tippy } from "@tippyjs/react/headless";
-import Tooltip from "@tippyjs/react";
+// import Tippy, { tippy } from "@tippyjs/react/headless";
+import Tippy from "@tippyjs/react";
 import "tippy.js/dist/tippy.css";
 import {
   FaBars,
@@ -13,13 +13,15 @@ import {
   FaHotdog,
   FaRegBell,
   FaSearch,
-  FaTimes,
   FaUserCircle,
   FaAngleDoubleRight,
 } from "react-icons/fa";
 import "./header.scss";
+import petPalsAPI from "~/api/petPalsAPI";
 
 function Header() {
+  const [itemDog, setItemDog] = useState([]);
+  const [itemCat, setItemCat] = useState([]);
   const [navbar, setNavbar] = useState(false);
   const [showSearch, setShowSearch] = useState(false);
   const [navbarShow, setNavbarShow] = useState(false);
@@ -31,10 +33,20 @@ function Header() {
     setShowSearch(!showSearch);
   };
 
-  tippy("button", {
-    content: "Global content",
-    trigger: "click",
-  });
+  useEffect(() => {
+    const getDog = async (category, pet) => {
+      try {
+        const param = category;
+        const response = await petPalsAPI.getItems(param);
+        pet(response.data.data.subitem);
+        window.scrollTo(0, 0);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getDog("64171a3daf4f228ec605d08a", setItemCat);
+    getDog("64171a2eaf4f228ec605d087", setItemDog);
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -125,7 +137,7 @@ function Header() {
         <div className="w-3/6 sm:w-1/6 flex items-center gap-1">
           <img width="50px" src={require("~/assets/logo192.png")} alt="" />
           <h3 className="border-nav-top_logo text-2xl font-extrabold">
-            PetPals
+            <Link to={"/"}>PetPals</Link>
           </h3>
         </div>
         <ul className="w-1/6 lg:w-2/6"></ul>
@@ -138,12 +150,12 @@ function Header() {
               </Link>
             </li>
             <li>
-              <Link to="/dog">
+              <Link to="/pet/6416ee5c33df1b92e7fb8351">
                 <b>Chó</b>
               </Link>
             </li>
             <li>
-              <Link to="/cat">
+              <Link to="/pet/6416ee6433df1b92e7fb8354">
                 <b>Mèo</b>
               </Link>
             </li>
@@ -158,20 +170,42 @@ function Header() {
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 20 20"
                   >
-                    <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />{" "}
+                    <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
                   </svg>
                 </button>
-                <ul className="bg-slate-100 dropdown-menu hidden absolute rounded px-2 py-2">
-                  <Link to={"/accessory/cat"}>
-                    <li className="py-2 px-4 block whitespace-no-wrap border-b border-[#f0bb7e]">
-                      Cat
-                    </li>
-                  </Link>
-                  <Link to={"/accessory/dog"}>
-                    <li className="py-2 px-4 block whitespace-no-wrap border-b border-[#f0bb7e]">
-                      dog
-                    </li>
-                  </Link>
+                <ul className="bg-[#f7ece0] dropdown-menu hidden absolute rounded shadow-lg shadow-indigo-500/40">
+                  <li className="block whitespace-no-wrap border-b border-[#f0bb7e]">
+                    <p className="px-2 text-center"> Chó</p>
+                    <ul className="rounded hidden w-52 absolute bg-[#f7ece0] shadow-lg shadow-indigo-500/40 left-full top-0">
+                      {itemDog &&
+                        itemDog.slice(0, 10).map((item, key) => (
+                          <Link to={`/products/${item._id}`} key={key}>
+                            <li
+                              className="block whitespace-no-wrap border-b border-[#f0bb7e]"
+                              key={item._id}
+                            >
+                              <p className="p-2">{item.name}</p>
+                            </li>
+                          </Link>
+                        ))}
+                    </ul>
+                  </li>
+                  <li className="dropdown-new py-2 px-4 block whitespace-no-wrap border-b border-[#f0bb7e]">
+                    <p className="px-2 text-center"> Mèo</p>
+                    <ul className="rounded w-52 hidden absolute bg-[#f7ece0] shadow-lg shadow-indigo-500/40 left-full top-0">
+                      {itemCat &&
+                        itemCat.slice(0, 10).map((item, key) => (
+                          <Link to={`/products/${item._id}`} key={key}>
+                            <li
+                              className="block whitespace-no-wrap border-b border-[#f0bb7e]"
+                              key={item._id}
+                            >
+                              <p className="p-2">{item.name}</p>
+                            </li>
+                          </Link>
+                        ))}
+                    </ul>
+                  </li>
                 </ul>
               </div>
             </li>
@@ -189,15 +223,15 @@ function Header() {
                     <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />{" "}
                   </svg>
                 </button>
-                <ul className="bg-slate-100 dropdown-menu hidden absolute rounded px-2 py-2">
-                  <Link to={"/food/cat"}>
+                <ul className="bg-[#f7ece0] dropdown-menu hidden absolute rounded px-2 py-2">
+                  <Link to={"/products/64171b66af4f228ec605d098"}>
                     <li className="py-2 px-4 block whitespace-no-wrap border-b border-[#f0bb7e]">
-                      Cat
+                      Mèo
                     </li>
                   </Link>
-                  <Link to={"/food/dog"}>
+                  <Link to={"/products/64171bfeaf4f228ec605d0b8"}>
                     <li className="py-2 px-4 block whitespace-no-wrap border-b border-[#f0bb7e]">
-                      dog
+                      Chó
                     </li>
                   </Link>
                 </ul>
@@ -205,23 +239,25 @@ function Header() {
             </li>
           </ul>
           <ul className="w-1/6 sm:w-2/6 flex flex-row items-center justify-around">
-            <Tooltip content="Search">
+            <Tippy content="Search">
               <li className="cursor-pointer" onClick={handleShowSearch}>
                 <FaSearch />
               </li>
-            </Tooltip>
-            <Tooltip content="Notices">
+            </Tippy>
+            <Tippy content="Notices">
               <li className="relative inline-block cursor-pointer">
                 <div className="notice-bell">
                   <FaRegBell />
                 </div>
               </li>
-            </Tooltip>
-            <Tooltip content="Profile">
-              <li className="cursor-pointer">
-                <FaUserCircle />
-              </li>
-            </Tooltip>
+            </Tippy>
+            <Tippy content="Profile">
+              <Link to={"/profile"}>
+                <li className="cursor-pointer">
+                  <FaUserCircle />
+                </li>
+              </Link>
+            </Tippy>
             <li className="cursor-pointer">
               <FaEllipsisV />
             </li>
@@ -239,7 +275,7 @@ function Header() {
                   onClick={showNavbar}
                 >
                   <span className=" text-red-600 h-6 w-10 text-2xl">
-                    <FaAngleDoubleRight></FaAngleDoubleRight>{" "}
+                    <FaAngleDoubleRight></FaAngleDoubleRight>
                   </span>
                 </button>
                 {/*body*/}
@@ -253,9 +289,11 @@ function Header() {
                       <FaRegBell /> <b>Notices</b>
                     </li>
 
-                    <li>
-                      <FaUserCircle /> <b>Profile</b>
-                    </li>
+                    <Link to={"/profile"}>
+                      <li>
+                        <FaUserCircle /> <b>Profile</b>
+                      </li>
+                    </Link>
                     <li>
                       <FaEllipsisV /> <b>Setting</b>
                     </li>
@@ -265,12 +303,12 @@ function Header() {
                         <b>Home</b>
                       </li>
                     </Link>
-                    <Link to="/about">
+                    <Link to={"/pet/6416ee5c33df1b92e7fb8351"}>
                       <li>
                         <FaDog></FaDog> <b>Chó</b>
                       </li>
                     </Link>
-                    <Link to="/cat">
+                    <Link to="/pet/6416ee6433df1b92e7fb8354">
                       <li>
                         <FaCat></FaCat>
                         <b>Mèo</b>
@@ -288,39 +326,47 @@ function Header() {
                             <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />{" "}
                           </svg>
                         </button>
-                        <ul className="bg-slate-100 dropdown-menu hidden absolute rounded">
-                          <li className="">
-                            <a
-                              className="rounded-t py-2 px-4 block whitespace-no-wrap"
-                              href="/"
-                            >
-                              One
-                            </a>
+                        <ul className="bg-[#ddd1c5] dropdown-menu hidden absolute rounded right-0 top-full z-10">
+                          <li className=" py-2 px-4 block whitespace-no-wrap border-b border-[#f0bb7e]">
+                            <Link to={`/products`}>
+                              <p className="px-2 text-center">Chó</p>
+                            </Link>
                           </li>
-                          <li className="">
-                            <a
-                              className="py-2 px-4 block whitespace-no-wrap"
-                              href="/"
-                            >
-                              Two
-                            </a>
-                          </li>
-                          <li className="">
-                            <a
-                              className="rounded-b py-2 px-4 block whitespace-no-wrap"
-                              href="/"
-                            >
-                              Three
-                            </a>
+                          <li className=" py-2 px-4 block whitespace-no-wrap border-b border-[#f0bb7e]">
+                            <Link to={`/products`}>
+                              <p className="px-2 text-center">Mèo</p>
+                            </Link>
                           </li>
                         </ul>
                       </div>
                     </li>
-                    <Link to="/cat">
-                      <li>
-                        <FaHotdog></FaHotdog> <b>Thức ăn</b>
-                      </li>
-                    </Link>
+
+                    <li>
+                      <div className="dropdown relative flex flex-row">
+                        <button className="py-2 rounded inline-flex items-center">
+                          <FaHotdog></FaHotdog> <b>Thức ăn</b>
+                          <svg
+                            className="fill-current h-4 w-4"
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 20 20"
+                          >
+                            <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />{" "}
+                          </svg>
+                        </button>
+                        <ul className="bg-[#ddd1c5] dropdown-menu hidden absolute rounded right-0 top-full z-10">
+                          <li className=" py-2 px-4 block whitespace-no-wrap border-b border-[#f0bb7e]">
+                            <Link to={`/products/64171b66af4f228ec605d098`}>
+                              <p className="px-2 text-center"> Chó</p>
+                            </Link>
+                          </li>
+                          <li className=" py-2 px-4 block whitespace-no-wrap border-b border-[#f0bb7e]">
+                            <Link to={`/products/64171bfeaf4f228ec605d0b8`}>
+                              <p className="px-2 text-center"> Mèo</p>
+                            </Link>
+                          </li>
+                        </ul>
+                      </div>
+                    </li>
                   </ul>
                 </div>
               </div>

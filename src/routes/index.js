@@ -1,21 +1,26 @@
 import Home from "~/pages/home";
-import Cat from "~/pages/cat";
-import Dog from "~/pages/dog";
-import Food from "~/pages/food";
-import Accessory from "~/pages/accessory";
+import Products from "~/pages/products";
+import Pet from "~/pages/pet";
+import DetailPet from "~/pages/detailPet";
+import DetailProduct from "~/pages/detailProduct";
+import Sign from "~/pages/sign";
 
 const routes = {
   home: "/",
-  dog: "/dog",
-  cat: "/cat",
-  accessory: "/accessory/:animal",
-  food: "/food:animal",
+  pet: "/pet/:id",
+  petNoId: "/pet/",
+  profile: "/profile/",
+  products: "/products/:idProduct",
+  detailPet: "/detailPet/:id",
+  detailProduct: "/detailProduct/:id",
 };
 
 export const SetRoutes = [
   { path: routes.home, components: Home },
-  { path: routes.cat, components: Cat },
-  { path: routes.dog, components: Dog },
-  { path: routes.accessory, components: Accessory },
-  { path: routes.food, components: Food },
+  { path: routes.profile, components: Sign },
+  { path: routes.pet, components: Pet },
+  { path: routes.petNoId, components: Pet },
+  { path: routes.products, components: Products },
+  { path: routes.detailPet, components: DetailPet },
+  { path: routes.detailProduct, components: DetailProduct },
 ];
