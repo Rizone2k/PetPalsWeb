@@ -2,22 +2,34 @@
 import { useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import "./sign.scss";
+import "./auth.scss";
 import Button from "~/components/button";
 import { FaAt, FaKey } from "react-icons/fa";
-const SignInForm = (title) => {
-  // const [email, setEmail] = useState("");
-  // const [password, setPassword] = useState("");
-  // const [show, setShow] = useState(false);
-  // const [error, setError] = useState(false);
+import { unwrapResult } from "@reduxjs/toolkit";
+import { login } from "~/redux/reducers/auth";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
+const SignInForm = (title) => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const formik = useFormik({
     initialValues: {
       email: "",
       password: "",
     },
     onSubmit: (values) => {
-      console.log(values);
+      // console.log(values);
+      if (values) {
+        dispatch(login(values))
+          .then(unwrapResult)
+          .then(navigate("/"))
+          .catch((err) => {
+            console.log(err);
+          });
+      } else {
+        console.log("Có biến cmnr!");
+      }
     },
     validationSchema: Yup.object({
       email: Yup.string()
@@ -31,7 +43,7 @@ const SignInForm = (title) => {
         .min(3, "Mật khẩu tối thiểu phải có 3 ký tự!"),
     }),
   });
-  console.log(formik.errors);
+  // console.log(formik.errors);
 
   return title.title === "Sign In" ? (
     <section className="bg-[#fceab8ea] w-5/6 md:w-2/3 lg:w-3/6 mx-auto rounded-lg p-3 flex flex-col justify-center items-center">

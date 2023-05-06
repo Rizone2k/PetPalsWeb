@@ -1,12 +1,14 @@
 import React from "react";
+import "./footer.scss";
 
 function Footer() {
   return (
     <footer
       aria-label="Site Footer"
-      className="bg-gradient-to-b from-[#dd7f0486] to-[#e6810ec2] text-white"
+      // className="bg-gradient-to-b from-[#dd7f049a] to-[#d4ad79f5] text-white parabolic-shape-footer"
+      className="bg-gradient-to-b from-[#dd7f049a] to-[#d4ad79f5] text-white parabolic-shape-footer"
     >
-      <div className="max-w-screen-xl px-4 pt-10 pb-8 mx-auto sm:px-6 lg:px-8 lg:pt-16">
+      <div className="max-w-screen-xl px-4 pt-10 pb-3 mx-auto sm:px-6 lg:px-8 lg:pt-12">
         <div className="text-center">
           <h2 className="text-3xl font-extrabold sm:text-5xl">
             PetPals website

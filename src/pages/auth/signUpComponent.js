@@ -1,18 +1,16 @@
 import * as Yup from "yup";
 import Button from "~/components/button";
-import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { register } from "~/redux/reducers/auth";
+import { unwrapResult } from "@reduxjs/toolkit";
 import { useFormik } from "formik";
-import "./sign.scss";
+import "./auth.scss";
 import { FaAt, FaKey, FaUserAlt } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
+
 const SignUpForm = (title) => {
-  // const [show, setShow] = useState(null);
-  // const [email, setEmail] = useState("");
-  // const [userName, setUserName] = useState("");
-  // const [password, setPassword] = useState("");
-  // const [confirmedPassword, setConfirmedPassword] = useState("");
-  const [checkPassword, setCheckPassword] = useState(true);
-  // console.log(checkPassword);
-  const [response, setResponse] = useState("");
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const formik = useFormik({
     initialValues: {
@@ -22,7 +20,27 @@ const SignUpForm = (title) => {
       confirmedPassword: "",
     },
     onSubmit: (values) => {
-      console.log(values);
+      // console.log("user's input", values);
+      if (values) {
+        const user = {
+          email: values.email,
+          password: values.password,
+        };
+        dispatch(register(user))
+          .then(unwrapResult)
+          .then(() => {
+            navigate("/profile");
+            alert("Oke, tạo thành công!");
+            // setUserName("");
+            // setPassword("");
+          })
+          .catch((err) => {
+            console.log(err);
+            alert("Đéo ổn rồi trong Catch!");
+          });
+      } else {
+        alert("Đéo ổn rồi!");
+      }
     },
     validationSchema: Yup.object({
       userName: Yup.string()
@@ -48,7 +66,7 @@ const SignUpForm = (title) => {
         .oneOf([Yup.ref("password"), null], "Mật khẩu không khớp!"),
     }),
   });
-  console.log(formik.errors);
+  // console.log(formik.errors);
 
   return title.title === "Sign Up" ? (
     <section className="bg-[#fceab8ea] w-5/6 md:w-2/3 lg:w-3/6 mx-auto rounded-lg p-3 flex flex-col justify-center items-center">
@@ -124,9 +142,7 @@ const SignUpForm = (title) => {
             required
             type="password"
             autoComplete="off"
-            className={`sm:text-base text-sm px-3 py-2 border-b-2 border-[#695308] w-full bg-[#fdf9e15e] ${
-              checkPassword ? "" : "bg-[#fc6e6e] border-[#690808]"
-            }`}
+            className={`sm:text-base text-sm px-3 py-2 border-b-2 border-[#695308] w-full bg-[#fdf9e15e]`}
             placeholder="Enter password again"
           />
           {formik.errors && (

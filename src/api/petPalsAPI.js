@@ -31,40 +31,9 @@ const petPalsAPI = {
     const url = "/pet/search?key=" + params + "&page=" + page;
     return instance.get(url);
   },
-  // getPetList: (id, page = "1") => {
-  //   const url = "pet?category=" + id + "&page=" + page;
-  //   return instance.get(url);
-  // },
-  //   getPetDetail: (id, page = "1") => {
-  //     const url = "pet?category=" + id + "&page=" + page;
-  //     return instance.get(url);
-  //   },
   // ~~~~~~~~~~~~~~Product~~~~~~~~~~~~~~~~//
-  searchProduct: (params, page = "1") => {
-    const url = "/product/search?key=" + params + "&page=" + page;
-    return instance.get(url);
-  },
-  // getProductList: (id, page = "1") => {
-  //   const url = "product?category=" + id + "&page=" + page;
-  //   return instance.get(url);
-  // },
-  //   getProductDetails: (id, page = "1") => {
-  //     const url = "pet?category=" + id + "&page=" + page;
-  //     return instance.get(url);
-  //   },
-  // ~~~~~~~~~~~~~~items~~~~~~~~~~~~~~~~//
-  searchItems: (params, page = "1") => {
-    const url = "/item/search?key=" + params + "&page=" + page;
-    return instance.get(url);
-  },
-  getItemList: (id, page = "1") => {
-    const url = "pet?items=" + id + "&page=" + page;
-    return instance.get(url);
-  },
-  //   getItemDetails: (id, page = "1") => {
-  //     const url = "pet?category=" + id + "&page=" + page;
-  //     return instance.get(url);
-  //   },
+
+  // ~~~~~~~~~~~~~~Items~~~~~~~~~~~~~~~~//
 };
 
 export default petPalsAPI;

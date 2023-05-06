@@ -86,11 +86,11 @@ export default function Home(props) {
         </div>
         <div className="flex w-full justify-end items-end">
           <Button
-            className="see-more bg-orange-200"
+            className="see-more bg-orange-200 text-[#da652f]"
             title="See more"
             type={"button"}
           >
-            <Link to={"/pet"}>Xem thêm {">>"}</Link>
+            <Link to={"/pet/6416ee5c33df1b92e7fb8351"}>Xem thêm {">>"}</Link>
           </Button>
         </div>
       </div>
@@ -120,11 +120,11 @@ export default function Home(props) {
         </div>
         <div className="flex w-full justify-end items-end">
           <Button
-            className="see-more bg-orange-200"
+            className="see-more bg-orange-200 text-[#ff793b]"
             title="See more"
             type={"button"}
           >
-            <Link to={"/pet"}>Xem thêm {">>"}</Link>
+            <Link to={"/pet/6416ee6433df1b92e7fb8354"}>Xem thêm {">>"}</Link>
           </Button>
         </div>
       </div>

@@ -53,7 +53,7 @@ function DetailPet(props) {
   }, [param]);
 
   useEffect(() => {
-    const getDetailPet = async () => {
+    const getRecommendPet = async () => {
       if (detailPet != null) {
         try {
           const responseRecommend = await petPalsAPI.getPetList(petId);
@@ -64,7 +64,7 @@ function DetailPet(props) {
         }
       }
     };
-    getDetailPet();
+    getRecommendPet();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [petId]);
 

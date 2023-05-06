@@ -23,7 +23,7 @@ function Banner(props) {
             <Link to={"/cat"}>
               <Button
                 type={"button"}
-                className={`btn-outline btn text-xs md:text-sm`}
+                className={`bg-orange-50 rounded-xl border-2 text-[#ff793b] hover:border-[#fda77f]`}
                 onClick={null}
               >
                 Xem Ngay

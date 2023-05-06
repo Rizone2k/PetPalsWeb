@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 // import Tippy, { tippy } from "@tippyjs/react/headless";
 import Tippy from "@tippyjs/react";
 import "tippy.js/dist/tippy.css";
@@ -15,22 +15,40 @@ import {
   FaSearch,
   FaUserCircle,
   FaAngleDoubleRight,
+  FaDoorOpen,
+  FaAddressCard,
+  FaShoppingBasket,
+  FaHandHoldingHeart,
 } from "react-icons/fa";
 import "./header.scss";
 import petPalsAPI from "~/api/petPalsAPI";
+import { isLoggedInSelector } from "~/redux/selectors";
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "~/redux/reducers/auth";
+import { unwrapResult } from "@reduxjs/toolkit";
 
 function Header() {
   const [itemDog, setItemDog] = useState([]);
   const [itemCat, setItemCat] = useState([]);
+  const isLogin = useSelector(isLoggedInSelector);
   const [navbar, setNavbar] = useState(false);
   const [showSearch, setShowSearch] = useState(false);
   const [navbarShow, setNavbarShow] = useState(false);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const showNavbar = () => {
     setNavbarShow(!navbarShow);
   };
   const handleShowSearch = () => {
     setShowSearch(!showSearch);
+  };
+  const handleLogOutClick = () => {
+    // handleClose();
+    dispatch(logout())
+      .then(unwrapResult)
+      .then(navigate("/profile"))
+      .catch((err) => console.log(err));
   };
 
   useEffect(() => {
@@ -226,12 +244,12 @@ function Header() {
                 <ul className="bg-[#f7ece0] dropdown-menu hidden absolute rounded px-2 py-2">
                   <Link to={"/products/64171b66af4f228ec605d098"}>
                     <li className="py-2 px-4 block whitespace-no-wrap border-b border-[#f0bb7e]">
-                      Mèo
+                      Chó
                     </li>
                   </Link>
                   <Link to={"/products/64171bfeaf4f228ec605d0b8"}>
                     <li className="py-2 px-4 block whitespace-no-wrap border-b border-[#f0bb7e]">
-                      Chó
+                      Mèo
                     </li>
                   </Link>
                 </ul>
@@ -239,6 +257,13 @@ function Header() {
             </li>
           </ul>
           <ul className="w-1/6 sm:w-2/6 flex flex-row items-center justify-around">
+            <Tippy content="Rehome cho thú cưng">
+              <li>
+                <Link to={"/rehome"}>
+                  <FaHandHoldingHeart className="text-[#f8355f]" />
+                </Link>
+              </li>
+            </Tippy>
             <Tippy content="Search">
               <li className="cursor-pointer" onClick={handleShowSearch}>
                 <FaSearch />
@@ -251,16 +276,54 @@ function Header() {
                 </div>
               </li>
             </Tippy>
-            <Tippy content="Profile">
-              <Link to={"/profile"}>
+            {isLogin ? (
+              <>
+                <div className="dropdown inline-block relative">
+                  <button className="py-2 rounded inline-flex items-center">
+                    <span className="mr-1">
+                      <FaUserCircle />
+                    </span>
+                  </button>
+                  <ul className="bg-[#f1e4d5e7] dropdown-menu hidden absolute rounded p-2 w-20 translate-x-[-30px]">
+                    <Tippy placement="right" content="Info">
+                      <li className="py-2 px-2 flex justify-center whitespace-no-wrap border-b border-[#ebd3ba]">
+                        <Link to={"/profile"}>
+                          <FaAddressCard className="text-[#2bb972]" />
+                        </Link>
+                      </li>
+                    </Tippy>
+                    <Tippy placement="right" content="Logout">
+                      <li
+                        className="py-2 px-2 flex justify-center whitespace-no-wrap border-b border-[#ebd3ba]"
+                        onClick={handleLogOutClick}
+                      >
+                        <FaDoorOpen className="text-[#b94c2b]" />
+                      </li>
+                    </Tippy>
+                  </ul>
+                </div>
+                <Tippy content="Giỏ hàng">
+                  <li>
+                    <Link to={"/cart"}>
+                      <FaShoppingBasket />
+                    </Link>
+                  </li>
+                </Tippy>
+              </>
+            ) : (
+              <>
+                <Tippy content="Login">
+                  <Link to={"/profile"}>
+                    <li className="cursor-pointer">
+                      <FaUserCircle />
+                    </li>
+                  </Link>
+                </Tippy>
                 <li className="cursor-pointer">
-                  <FaUserCircle />
+                  <FaEllipsisV />
                 </li>
-              </Link>
-            </Tippy>
-            <li className="cursor-pointer">
-              <FaEllipsisV />
-            </li>
+              </>
+            )}
           </ul>
         </div>
         {/* show for mobile */}
@@ -281,6 +344,11 @@ function Header() {
                 {/*body*/}
                 <div className="relative px-6 flex-auto ul-nav-show">
                   <ul className="gap-5 w-full p-2">
+                    <Link to={"/rehome"}>
+                      <li>
+                        <FaHandHoldingHeart /> <b>Rehome</b>
+                      </li>
+                    </Link>
                     <li onClick={handleShowSearch}>
                       <FaSearch /> <b>Search</b>
                     </li>
