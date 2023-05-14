@@ -17,52 +17,88 @@ const authSlice = createSlice({
         state.isLoggedIn = true;
         state.currentUser = action.payload.user;
         state.cart = action.payload.cart;
-        Cookies.set("LOGGED", JSON.stringify(state.isLoggedIn), { expires: 1 });
-        Cookies.set("SHOP", JSON.stringify(state.cart), { expires: 1 });
-        Cookies.set("INFO", JSON.stringify(state.currentUser), { expires: 1 });
-        const total = action.payload.cart.reduce(
-          (sum, { quantity, product }) =>
-            sum + parseInt(quantity * product.price),
-          0
+        Cookies.set("LOGGED", JSON.stringify(state.isLoggedIn));
+        Cookies.set("SHOP", JSON.stringify(state.cart));
+        Cookies.set("INFO", JSON.stringify(state.currentUser));
+        let total = 0;
+        action.payload.cart.map(
+          (e, i) => (total += parseInt(e.quantity * e.product.price))
         );
         state.total = total;
+        const idProductCart = state.cart.map(
+          (obj) => ({
+            idProduct: obj.product._id,
+            quantity: obj.quantity,
+            // name: obj.product.name,
+            // img: obj.product.images[0],
+            // price: obj.product.price,
+            total: total,
+          }),
+          {}
+        );
+        Cookies.set("SHOP", JSON.stringify({ idProductCart }));
       })
       .addCase(logout.fulfilled, (state) => {
         state.isLoggedIn = false;
         state.currentUser = {};
         state.cart = [];
-        Cookies.set("LOGGED", JSON.stringify(state.isLoggedIn), { expires: 1 });
-        Cookies.set("SHOP", JSON.stringify(state.cart), { expires: 1 });
-        Cookies.set("INFO", JSON.stringify(state.currentUser), { expires: 1 });
+        Cookies.remove("LOGGED", JSON.stringify(state.isLoggedIn), {
+          expires: 1,
+        });
+        Cookies.remove("SHOP", JSON.stringify(state.cart));
+        Cookies.remove("INFO", JSON.stringify(state.currentUser), {
+          expires: 1,
+        });
       })
       .addCase(refreshToken.fulfilled, (state, action) => {
         state.isLoggedIn = true;
         state.currentUser = action.payload;
-        Cookies.set("INFO", JSON.stringify(state.currentUser), { expires: 1 });
+        Cookies.set("INFO", JSON.stringify(state.currentUser));
       })
       .addCase(updateInfo.fulfilled, (state, action) => {
         state.currentUser = action.payload;
-        Cookies.set("INFO", JSON.stringify(state.currentUser), { expires: 1 });
+        Cookies.set("INFO", JSON.stringify(state.currentUser));
       })
       .addCase(addCart.fulfilled, (state, action) => {
         state.cart = action.payload;
-        Cookies.set("SHOP", JSON.stringify(state.cart), { expires: 1 });
-        const total = action.payload.cart.reduce(
-          (sum, { quantity, product }) =>
-            sum + parseInt(quantity * product.price),
-          0
+        let total = 0;
+        action.payload.map(
+          (e, i) => (total += parseInt(e.quantity * e.product.price))
         );
         state.total = total;
+        const idProductCart = state.cart.map(
+          (obj) => ({
+            idProduct: obj.product._id,
+            quantity: obj.quantity,
+            // name: obj.product.name,
+            // img: obj.product.images[0],
+            // price: obj.product.price,
+            total: total,
+          }),
+          {}
+        );
+        Cookies.set("SHOP", JSON.stringify({ idProductCart }));
       })
       .addCase(updateCart.fulfilled, (state, action) => {
         state.cart = action.payload;
-        Cookies.set("SHOP", JSON.stringify(state.cart), { expires: 1 });
-        const total = action.payload.cart.reduce(
-          (sum, { quantity, product }) =>
-            sum + parseInt(quantity * product.price),
-          0
+        Cookies.set("SHOP", JSON.stringify(state.cart));
+        let total = 0;
+        action.payload.map(
+          (e, i) => (total += parseInt(e.quantity * e.product.price))
         );
         state.total = total;
+        const idProductCart = state.cart.map(
+          (obj) => ({
+            idProduct: obj.product._id,
+            quantity: obj.quantity,
+            // name: obj.product.name,
+            // img: obj.product.images[0],
+            // price: obj.product.price,
+            total: total,
+          }),
+          {}
+        );
+        Cookies.set("SHOP", JSON.stringify({ idProductCart }));
       })
       .addCase(clear.fulfilled, (state, action) => {
         state.cart = [];
@@ -80,7 +116,6 @@ export const login = createAsyncThunk(
     try {
       const res = await instance.post(`/auth/login`, { email, password });
       if (res.status === 200) {
-        console.log("auth", res);
         info = res.data;
         if (res.data.status === "success") {
           Cookies.set("access_token", res.data.data.accessToken);

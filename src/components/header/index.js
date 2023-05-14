@@ -22,7 +22,7 @@ import {
 } from "react-icons/fa";
 import "./header.scss";
 import petPalsAPI from "~/api/petPalsAPI";
-import { isLoggedInSelector } from "~/redux/selectors";
+import { currentCartSelector, isLoggedInSelector } from "~/redux/selectors";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "~/redux/reducers/auth";
 import { unwrapResult } from "@reduxjs/toolkit";
@@ -34,6 +34,7 @@ function Header() {
   const [navbar, setNavbar] = useState(false);
   const [showSearch, setShowSearch] = useState(false);
   const [navbarShow, setNavbarShow] = useState(false);
+  const cart = useSelector(currentCartSelector);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -303,10 +304,16 @@ function Header() {
                   </ul>
                 </div>
                 <Tippy content="Giỏ hàng">
-                  <li>
-                    <Link to={"/cart"}>
-                      <FaShoppingBasket />
-                    </Link>
+                  <li className="relative inline-block cursor-pointer">
+                    <div
+                      className={` ${
+                        cart && cart.length > 0 ? "notice-bell" : ""
+                      }`}
+                    >
+                      <Link to={"/cart"}>
+                        <FaShoppingBasket />
+                      </Link>
+                    </div>
                   </li>
                 </Tippy>
               </>

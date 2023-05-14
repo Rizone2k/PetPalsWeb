@@ -6,53 +6,40 @@ import Card from "./components/card";
 import capitalizeAllWords from "./components/handleString";
 import Button from "~/components/button";
 
-export default function Products(props) {
-  const [product, setProduct] = useState([]);
-  console.log(product);
+export default function Products() {
+  const [products, setProducts] = useState([]);
   const [page, setPage] = useState(1);
   var param = useParams();
-  console.log(param);
-
   const loadMore = async () => {
-    setPage(page + 1);
+    try {
+      setPage(page + 1);
+      const limit = 10;
+      let response = null;
+      param && Object.keys(param).length !== 0
+        ? (response = await petPalsAPI.getProduct(param.idProduct, limit, page))
+        : (response = await petPalsAPI.getProduct("", limit, page));
+      response && setProducts([...products, ...response.data.data]);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   useEffect(() => {
-    const getPetList = async (param) => {
+    setPage(1);
+    const getProductList = async (param) => {
       const limit = 10;
+      setProducts([]);
       if (param && Object.keys(param).length !== 0) {
         const response = await petPalsAPI.getProduct(param, limit, page);
-        setProduct([...product, ...response.data.data]);
+        setProducts(response.data.data);
       } else {
         const response = await petPalsAPI.getProduct("", limit, page);
-        setProduct([...product, ...response.data.data]);
+        setProducts(response.data.data);
       }
     };
-    getPetList(param.idProduct);
-  }, [page]);
-
-  useEffect(() => {
-    setPage(1);
-    const getPetList = async (param) => {
-      const limit = 10;
-      if (param && Object.keys(param).length !== 0) {
-        try {
-          const response = await petPalsAPI.getProduct(param, limit, page);
-          setProduct(response.data.data);
-        } catch (error) {
-          console.log(error);
-        }
-      } else {
-        try {
-          const response = await petPalsAPI.getProduct("", limit);
-          setProduct(response.data.data);
-        } catch (error) {
-          console.log(error);
-        }
-      }
-    };
-    getPetList(param.idProduct);
-  }, [param]);
+    getProductList(param.idProduct);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [param.idProduct]);
 
   return (
     <div>
@@ -65,7 +52,7 @@ export default function Products(props) {
             </b>
           </div>
           <p>
-            <b className="bg-[#b8821e] text-xs lg:text-lg text-white flex flex-row items-center rounded-xl px-3 py-2">
+            <b className="bg-[#fdc243fd] text-xs lg:text-lg text-white flex flex-row items-center rounded-xl px-5 py-2">
               <a href="/products" target="_black" title="See all">
                 {" "}
                 All{" >"}
@@ -75,8 +62,8 @@ export default function Products(props) {
         </div>
         <div className="max-w-screen-xl mb-5 mx-auto">
           <div className="flex flex-wrap -mx-1 lg:-mx-1">
-            {product && product.length !== 0 ? (
-              product.map((item) => {
+            {products && products.length !== 0 ? (
+              products.map((item) => {
                 return (
                   <Card
                     key={item._id}
@@ -84,8 +71,6 @@ export default function Products(props) {
                     src={item.thumb}
                     name={capitalizeAllWords(item.name)}
                     price={item.price}
-                    // from={item.subcategory.name}
-                    // age={item.subcategory.createdAt}
                   ></Card>
                 );
               })

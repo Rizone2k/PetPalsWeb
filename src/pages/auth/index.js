@@ -75,10 +75,10 @@ export default function Sign() {
       {isLogin ? (
         <>
           <section className="bg-gradient-to-r from-[orange] to-[#ff3c00]">
-            <div className="row d-flex justify-content-center align-items-center p-10">
-              <div className="bg-[#fcecc1c4] relative w-2/3 mx-auto p-10 rounded-xl flex flex-row flex-wrap">
-                <div className="text-white flex flex-col w-1/4">
-                  <div className="m-auto text-center">
+            <div className="row d-flex justify-content-center align-items-center p-3 lg:p-10">
+              <div className="bg-[#fcecc1c4] relative w-full md:w-2/3 mx-auto px-6 py-12 lg:p-10 rounded-xl flex flex-col sm:flex-row sm:items-start items-center  flex-wrap gap-1 sm:gap-0">
+                <div className="text-white flex flex-col w-1/4 sm:pr-2">
+                  <div className="mx-auto text-center">
                     <img
                       width={"150px"}
                       src={avatar}
@@ -98,7 +98,7 @@ export default function Sign() {
 
                 <div className="w-3/4">
                   <div className="flex flex-col">
-                    <div className="flex flex-row items-center lg:w-3/4 w-full">
+                    <div className="flex flex-row items-center lg:w-3/4 w-full py-2">
                       <FaInfo className="text-2xl text-blue-500"></FaInfo>
                       <b className="text-xl">Thông tin</b>
                     </div>

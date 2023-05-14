@@ -1,7 +1,3 @@
-.overview {
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
-  text-overflow: ellipsis;
-  overflow: hidden;
+.shadow-custom {
+  box-shadow: 1px 8px 20px 5px rgba(0, 0, 0, 0.25);
 }

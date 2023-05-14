@@ -20,7 +20,7 @@ function Banner(props) {
           </h2>
           <h5 className="xl:text-3xl lg:text-2lx py-2">mại dô mại dô...</h5>
           <div className="place-self-center py-5">
-            <Link to={"/cat"}>
+            <Link to={"/pet"}>
               <Button
                 type={"button"}
                 className={`bg-orange-50 rounded-xl border-2 text-[#ff793b] hover:border-[#fda77f]`}

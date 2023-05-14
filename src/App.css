@@ -7,6 +7,10 @@ html {
   font-family: 'Mali', cursive;
 }
 
+ol {
+  list-style-type: decimal;
+}
+
 *,
 *:before,
 *:after {
@@ -90,6 +94,23 @@ img {
 a:focus, a:hover {
   text-decoration: none;
   outline: none;
+}
+
+
+.overview {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.overview-one {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 
 /* End reset */

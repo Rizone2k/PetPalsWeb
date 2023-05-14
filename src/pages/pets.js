@@ -6,51 +6,65 @@ import Card from "./components/card";
 import capitalizeAllWords from "./components/handleString";
 import Button from "~/components/button";
 
-export default function Pet(props) {
-  const [petList, setPetList] = useState([]);
+export default function Pets(props) {
+  const [pets, setPets] = useState([]);
   const [page, setPage] = useState(1);
   var param = useParams();
 
   const loadMore = async () => {
-    setPage(page + 1);
+    try {
+      setPage(page + 1);
+      const limit = 10;
+      let response = null;
+      param && Object.keys(param).length !== 0
+        ? petPalsAPI.getPetList(param, limit, page)
+        : petPalsAPI.getPetList("", limit, page);
+      response && setPets([...pets, ...response.data.data]);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   useEffect(() => {
-    const getPetList = async (param) => {
+    setPage(1);
+    const getPets = async (param) => {
       const limit = 10;
       if (param && Object.keys(param).length !== 0) {
         const response = await petPalsAPI.getPetList(param, limit, page);
-        setPetList([...petList, ...response.data.data]);
+        setPets([...pets, ...response.data.data]);
       } else {
         const response = await petPalsAPI.getPetList("", limit, page);
-        setPetList([...petList, ...response.data.data]);
+        setPets([...pets, ...response.data.data]);
       }
     };
-    getPetList(param.id);
-  }, [page]);
+    getPets(param.id);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [param.id]);
 
   useEffect(() => {
     setPage(1);
-    const getPetList = async (param) => {
+    const getPets = async (param) => {
+      setPets([]);
       const limit = 10;
       if (param && Object.keys(param).length !== 0) {
         try {
           const response = await petPalsAPI.getPetList(param, limit, page);
-          setPetList(response.data.data);
+          setPets(response.data.data);
         } catch (error) {
           console.log(error);
         }
       } else {
         try {
           const response = await petPalsAPI.getPetList("", limit);
-          setPetList(response.data.data);
+          setPets(response.data.data);
         } catch (error) {
           console.log(error);
         }
       }
     };
-    getPetList(param.id);
-  }, [param]);
+    getPets(param.id);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [param.id]);
 
   return (
     <div>
@@ -63,9 +77,8 @@ export default function Pet(props) {
             </b>
           </div>
           <p>
-            <b className="bg-[#b8821e] text-xs lg:text-lg text-white flex flex-row items-center rounded-xl px-3 py-2">
+            <b className="bg-[#fdc243fd] text-xs lg:text-lg text-white flex flex-row items-center rounded-xl px-3 py-2">
               <a href="/pet" target="_black" title="See all">
-                {" "}
                 All{" >"}
               </a>
             </b>
@@ -74,8 +87,8 @@ export default function Pet(props) {
 
         <div className="max-w-screen-xl mb-5 mx-auto">
           <div className="flex flex-wrap -mx-1 lg:-mx-1">
-            {petList &&
-              petList.map((item) => {
+            {pets &&
+              pets.map((item) => {
                 function getRandomValue() {
                   const randomNumber = Math.random();
                   return randomNumber < 0.5 ? "Đực" : "Cái";
