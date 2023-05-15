@@ -18,25 +18,24 @@ const authSlice = createSlice({
         state.currentUser = action.payload.user;
         state.cart = action.payload.cart;
         Cookies.set("LOGGED", JSON.stringify(state.isLoggedIn));
-        Cookies.set("SHOP", JSON.stringify(state.cart));
         Cookies.set("INFO", JSON.stringify(state.currentUser));
         let total = 0;
         action.payload.cart.map(
           (e, i) => (total += parseInt(e.quantity * e.product.price))
         );
         state.total = total;
-        const idProductCart = state.cart.map(
+        const product = state.cart.map(
           (obj) => ({
-            idProduct: obj.product._id,
+            _id: obj.product._id,
+            name: obj.product.name,
             quantity: obj.quantity,
-            // name: obj.product.name,
-            // img: obj.product.images[0],
-            // price: obj.product.price,
+            price: obj.product.price,
+            images: obj.product.thumb,
             total: total,
           }),
           {}
         );
-        Cookies.set("SHOP", JSON.stringify({ idProductCart }));
+        Cookies.set("SHOP", JSON.stringify({ product }));
       })
       .addCase(logout.fulfilled, (state) => {
         state.isLoggedIn = false;
@@ -66,18 +65,18 @@ const authSlice = createSlice({
           (e, i) => (total += parseInt(e.quantity * e.product.price))
         );
         state.total = total;
-        const idProductCart = state.cart.map(
+        const product = state.cart.map(
           (obj) => ({
-            idProduct: obj.product._id,
+            _id: obj.product._id,
+            name: obj.product.name,
             quantity: obj.quantity,
-            // name: obj.product.name,
-            // img: obj.product.images[0],
-            // price: obj.product.price,
+            price: obj.product.price,
+            images: obj.product.thumb,
             total: total,
           }),
           {}
         );
-        Cookies.set("SHOP", JSON.stringify({ idProductCart }));
+        Cookies.set("SHOP", JSON.stringify({ product }));
       })
       .addCase(updateCart.fulfilled, (state, action) => {
         state.cart = action.payload;
@@ -87,18 +86,18 @@ const authSlice = createSlice({
           (e, i) => (total += parseInt(e.quantity * e.product.price))
         );
         state.total = total;
-        const idProductCart = state.cart.map(
+        const product = state.cart.map(
           (obj) => ({
-            idProduct: obj.product._id,
+            _id: obj.product._id,
+            name: obj.product.name,
             quantity: obj.quantity,
-            // name: obj.product.name,
-            // img: obj.product.images[0],
-            // price: obj.product.price,
+            price: obj.product.price,
+            images: obj.product.thumb,
             total: total,
           }),
           {}
         );
-        Cookies.set("SHOP", JSON.stringify({ idProductCart }));
+        Cookies.set("SHOP", JSON.stringify({ product }));
       })
       .addCase(clear.fulfilled, (state, action) => {
         state.cart = [];
@@ -230,11 +229,7 @@ export const register = createAsyncThunk(
     try {
       const res = await instance.post(`/auth/register`, { email, password });
       if (res.status === 200) {
-        // console.log(res);
         if (res.data.status === "success") {
-          // if (res.data.data.access_token) {
-          //   Cookies.set("access_token", res.data.data.access_token);
-          // }
           return res.data;
         } else {
           throw rejectWithValue(res.data.message);
@@ -279,6 +274,9 @@ export const addCart = createAsyncThunk(
 export const updateCart = createAsyncThunk(
   "auth/updateCart",
   async ({ idUser, idProduct, quantity }, { rejectWithValue }) => {
+    console.log("------------------------------------");
+    console.log(idUser, idProduct, quantity);
+    console.log("------------------------------------");
     try {
       const res = await instance.post(`/cart/update`, {
         idUser,

@@ -54,7 +54,18 @@ const petPalsAPI = {
     const url = "product/" + param;
     return instance.get(url);
   },
-  // ~~~~~~~~~~~~~~Items~~~~~~~~~~~~~~~~//
+
+  checkout: ({ idUser, paymentMethod, fullName, email, address, phone }) => {
+    const url = "/checkout";
+    return instance.post(url, {
+      idUser,
+      paymentMethod,
+      fullName,
+      email,
+      address,
+      phone,
+    });
+  },
 };
 
 export default petPalsAPI;

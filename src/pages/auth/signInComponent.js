@@ -25,6 +25,8 @@ const SignInForm = (title) => {
           .then(unwrapResult)
           .then(navigate("/"))
           .catch((err) => {
+            alert(err);
+            navigate("/profile");
             console.log(err);
           });
       } else {

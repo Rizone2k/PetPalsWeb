@@ -64,7 +64,7 @@ export default function Card(props) {
               )}
               <li className="flex flex-row items-start p-2">
                 <FaDollarSign></FaDollarSign>
-                <p className="text-sm pl-2">{props.price}</p>
+                <p className="text-sm pl-2">{props.price.toLocaleString()}</p>
               </li>
             </ul>
           </header>

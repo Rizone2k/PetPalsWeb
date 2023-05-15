@@ -47,7 +47,7 @@ export default function Detail() {
     return randomNumber < 0.5 ? "Đực" : "Cái";
   };
   randomValue();
-  console.log("currentUser", param.id);
+  // console.log("currentUser", param.id);
 
   const handleAddCart = () => {
     if (isLoggedIn) {
@@ -88,13 +88,14 @@ export default function Detail() {
             navigate("/");
           }
 
-          console.log(response.data.data);
+          // console.log(response.data.data);
         }
       } catch (error) {
         console.log(error);
       }
     };
     getDetail();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [param]);
 
   // Get List pet recommend
@@ -107,7 +108,6 @@ export default function Detail() {
             ? (responseRecommend = await petPalsAPI.getPetList(petId))
             : (responseRecommend = await petPalsAPI.getProductList(petId));
           setRecommend(responseRecommend.data.data);
-          console.log("Data recommend", responseRecommend.data.data);
         } catch (error) {
           console.log(error);
         }
@@ -220,7 +220,7 @@ export default function Detail() {
                 <span className="text-[#fab92d] text-xl lg:text-2xl">
                   ${"\u00A0"}
                 </span>
-                {detail.price}
+                {detail.price.toLocaleString()}
               </p>
             </div>
             {param.param === "pet" && (
