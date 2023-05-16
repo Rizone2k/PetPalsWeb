@@ -31,6 +31,7 @@ instance.interceptors.response.use(
   (error) => {
     const statusCode = error.response ? error.response.status : null;
     const navigate = useNavigate();
+    console.log(statusCode);
     if (statusCode === 401) {
       Cookies.set("LOGGED", false);
       alert("Phiên đã hết hạn, vui lòng đăng nhập lại!") &&

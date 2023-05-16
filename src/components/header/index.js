@@ -53,7 +53,7 @@ function Header() {
   };
 
   useEffect(() => {
-    const getDog = async (category, pet) => {
+    const getPet = async (category, pet) => {
       try {
         const param = category;
         const response = await petPalsAPI.getItems(param);
@@ -63,8 +63,8 @@ function Header() {
         console.log(error);
       }
     };
-    getDog("64171a3daf4f228ec605d08a", setItemCat);
-    getDog("64171a2eaf4f228ec605d087", setItemDog);
+    getPet("64171a3daf4f228ec605d08a", setItemCat);
+    getPet("64171a2eaf4f228ec605d087", setItemDog);
   }, []);
 
   useEffect(() => {

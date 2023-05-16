@@ -93,6 +93,9 @@ export default function Cart(props) {
   const [statusOrder, setStatusOrder] = useState(false);
   const [copied, setCopied] = useState(false);
 
+  // console.log(idOrder);
+  // console.log(statusOrder);
+
   const handleShowPayment = () => {
     setShowSearch(!showSearch);
   };
@@ -110,10 +113,10 @@ export default function Cart(props) {
     // console.log(paymentMethod);
     // console.log(" currentUser.id", currentUser.id);
     if (
-      email.length !== 3 &&
-      fullName.length !== 3 &&
-      address.length !== 3 &&
-      phone.length !== 3
+      email.length >= 3 &&
+      fullName.length >= 2 &&
+      address.length >= 3 &&
+      phone.length >= 3
     ) {
       const rs = await petPalsAPI.checkout({
         idUser: currentUser.id,
@@ -125,8 +128,18 @@ export default function Cart(props) {
       });
       if (rs.data.status === "success") {
         if (rs.data.data) {
-          setIdOrder(rs.data.data);
-          setShowSearch(false);
+          dispatch(clear())
+            .then(unwrapResult)
+            .then(() => {
+              setIdOrder(rs.data.data);
+              setShowSearch(false);
+              setStatusOrder(true);
+              console.log(idOrder);
+              console.log(statusOrder);
+            })
+            .catch((err) => {
+              console.log(err);
+            });
         } else {
           dispatch(clear())
             .then(unwrapResult)
@@ -143,7 +156,7 @@ export default function Cart(props) {
         console.log(rs);
       }
     } else {
-      alert("Something's wrong!");
+      alert("Vui lòng nhập đủ thông tin!");
     }
   };
 
@@ -208,16 +221,20 @@ export default function Cart(props) {
                         ))
                       )
                     ) : (
-                      <div className="w-full flex flex-col justify-center items-center h-40">
-                        <p className="text-[#dd612f] font-extrabold text-xl py-2">
-                          Bạn chưa có sản phẩm nào trong giỏ hàng!
-                        </p>
-                        <span>
-                          <Link to={"/"}>
-                            <u>Mua sắm</u>
-                          </Link>
-                        </span>
-                      </div>
+                      <tr className="w-full flex flex-col justify-center items-center h-40">
+                        <td>
+                          <>
+                            <p className="text-[#dd612f] font-extrabold text-xl py-2">
+                              Bạn chưa có sản phẩm nào trong giỏ hàng!
+                            </p>
+                            <span>
+                              <Link to={"/"}>
+                                <u>Mua sắm</u>
+                              </Link>
+                            </span>
+                          </>
+                        </td>
+                      </tr>
                     )}
                   </tbody>
                 </table>

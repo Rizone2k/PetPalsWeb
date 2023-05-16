@@ -11,11 +11,10 @@ import instance from "./axios.config";
 
 const petPalsAPI = {
   // ~~~~~~~~~~~~~~Navigation~~~~~~~~~~~~~~~~//
-  getPet: (param) => {
+  getPetCategory: (param) => {
     const url = "category/" + param;
     return instance.get(url);
   },
-
   getProduct: (param, limit = 10, page = 1) => {
     const url =
       "product?subitem=" + param + "&limit=" + limit + "&page=" + page;
@@ -64,6 +63,26 @@ const petPalsAPI = {
       email,
       address,
       phone,
+    });
+  },
+  addPet: ({
+    idUser,
+    addPetName,
+    addPetPrice,
+    addPetCategory,
+    addPetSubcategory,
+    addPetDescription,
+    addPetImages,
+  }) => {
+    const url = "/addPet";
+    return instance.post(url, {
+      idUser,
+      addPetName,
+      addPetPrice,
+      addPetCategory,
+      addPetSubcategory,
+      addPetDescription,
+      addPetImages,
     });
   },
 };
