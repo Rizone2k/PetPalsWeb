@@ -24,14 +24,15 @@ export default function Rehome() {
   const [addPetPrice, setAddPetPrice] = useState(0);
   const [addPetCategory, setPetCategory] = useState("6416ee6433df1b92e7fb8354");
   const [addPetSubcategory, setAddPetSubcategory] = useState("");
+  const [addPetSubcategoryName, setAddPetSubcategoryName] = useState("");
   const [addPetDescription, setAddPetDescription] = useState("");
   const [addPetImages, setAddPetImages] = useState([]);
   const [showCategory, setShowCategory] = useState(false);
   const [showSubCategory, setShowSubCategory] = useState(false);
   const [itemDog, setItemDog] = useState([]);
   const [itemCat, setItemCat] = useState([]);
-  console.log(itemDog, itemCat);
-  console.log(addPetImages);
+  const ID_Cat = "6416ee6433df1b92e7fb8354";
+  const ID_Dog = "6416ee5c33df1b92e7fb8351";
 
   const modules = {
     toolbar: [
@@ -79,18 +80,14 @@ export default function Rehome() {
           description: addPetDescription,
           images: addPetImages,
         });
+        console.log(rs.data.status);
         console.log(rs);
         if (rs.data.status === "success") {
-          if (rs.data.data.status === "success") {
-            alert("Done!");
-            console.log("oke");
-            setAddPetDescription("");
-            setAddPetImages([]);
-            setAddPetName("");
-            setAddPetPrice(0);
-          } else {
-            alert("Đéo ổn");
-          }
+          alert("Thành công, thú cưng của bạn đang chờ được nhận nuôi!");
+          setAddPetDescription("");
+          setAddPetImages([]);
+          setAddPetName("");
+          setAddPetPrice(0);
         } else {
           console.log(rs.data);
         }
@@ -113,8 +110,8 @@ export default function Rehome() {
         console.log(error);
       }
     };
-    getPet("6416ee6433df1b92e7fb8354", setItemCat);
-    getPet("6416ee5c33df1b92e7fb8351", setItemDog);
+    getPet(ID_Cat, setItemCat);
+    getPet(ID_Dog, setItemDog);
   }, []);
 
   return (
@@ -126,64 +123,58 @@ export default function Rehome() {
             Rehome
           </b>
         </div>
-        <h1 className="text-md sm:text-md lg:text-lg font-semibold px-3">
+        <h3 className="text-md sm:text-md lg:text-lg font-semibold px-3">
           *Bạn vui lòng cung cấp các thông tin để tìm chủ nhân mới cho thú cưng
           qua các bước đơn gian sau:
-        </h1>
-        <div className="flex flex-col justify-center items-center w-full  bg-[#fafae5c8] rounded-2xl my-5 lg:p-5 shadow-md shadow-[#c5c3a3] ">
-          <div className="flex flex-row gap-5 justify-center items-center w-11/12">
-            <div className="name w-1/3 p-2">
+        </h3>
+        <div className="flex flex-col gap-5 w-11/12 mx-auto bg-[#f9f8e0c8] rounded-lg shadow-md p-5 mb-3">
+          <div className="grid md:grid-cols-2 grid-cols-1 gap-5">
+            <div className="flex items-center p-2">
               <label
                 htmlFor="discount"
-                className="pr-3 text-base text-blue-600"
+                className="w-10/12 text-base text-[black]"
               >
-                1. Tên thú cưng
+                <span className="pr-3"> 1. Tên thú cưng</span>
+                <input
+                  type="text"
+                  id="discount"
+                  name="paymentMethod"
+                  placeholder="Tên thú cưng"
+                  onChange={(e) => setAddPetName(e.target.value)}
+                  value={addPetName}
+                  className="w-full px-3 py-2 rounded-lg border-2 border-orange-200"
+                />
               </label>
-              <input
-                type="text"
-                id="discount"
-                name="paymentMethod"
-                placeholder="Tên thú cưng"
-                onChange={(e) => setAddPetName(e.target.value)}
-                value={addPetName}
-                className="px-3 py-2 rounded-lg border-2 border-orange-200"
-              />
             </div>
-            <div className="name w-1/3 p-2">
+            <div className="flex items-center p-2">
               <label
                 htmlFor="discount"
-                className="pr-3 text-base text-blue-600"
+                className="w-10/12 pr-3 text-base text-[black]"
               >
-                2. Chi phí (giá)
+                <span className="pr-3"> 2. Chi phí (giá)</span>
+                <input
+                  type="text"
+                  id="discount"
+                  name="paymentMethod"
+                  placeholder="Phí"
+                  onChange={(e) => setAddPetPrice(e.target.value)}
+                  value={addPetPrice}
+                  className="w-full px-3 py-2 rounded-lg border-2 border-orange-200"
+                />
               </label>
-              <input
-                type="text"
-                id="discount"
-                name="paymentMethod"
-                placeholder="Phí"
-                onChange={(e) => setAddPetPrice(e.target.value)}
-                value={addPetPrice}
-                className="px-3 py-2 rounded-lg border-2 border-orange-200"
-              />
             </div>
-            <div className="name w-1/3 p-2"></div>
-          </div>
-          <div className="flex flex-row gap-5 justify-center items-center w-11/12">
-            <div className="name w-1/3 p-2">
-              <label
-                htmlFor="discount"
-                className="pr-3 text-base text-blue-600"
-              >
-                3. Thú cưng
-              </label>
+            <div className="flex items-center p-2">
+              <p className="pr-3 text-base text-[black]">3. Thú cưng</p>
               <div className="relative inline-block text-left">
                 <div className="px-3 py-2 rounded-lg border-2 border-orange-200">
                   <button
                     type="button"
                     onClick={() => setShowCategory(!showCategory)}
-                    className="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                    className="cursor-pointer inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
                   >
-                    Loại thú cưng
+                    {addPetCategory === "6416ee5c33df1b92e7fb8351"
+                      ? "Chó"
+                      : "Mèo"}
                     <svg
                       className="-mr-1 h-5 w-5 text-gray-400"
                       viewBox="0 0 20 20"
@@ -207,20 +198,20 @@ export default function Rehome() {
                   <div className="py-1" role="none">
                     <ul>
                       <li
-                        className="px-3 py-1 border border-b-[#383737a4]"
+                        className="px-3 py-1 border border-b-[#383737a4] cursor-pointer"
                         onClick={(e) => {
                           setPetCategory("6416ee5c33df1b92e7fb8351");
-                          console.log(e.target.innerText);
+                          setAddPetSubcategoryName("");
                           setShowCategory(false);
                         }}
                       >
                         Chó
                       </li>
                       <li
-                        className="px-3 py-1 border border-b-[#383737a4]"
+                        className="px-3 py-1 border border-b-[#383737a4] cursor-pointer"
                         onClick={(e) => {
                           setPetCategory("6416ee6433df1b92e7fb8354");
-                          console.log(e.target.innerText);
+                          setAddPetSubcategoryName("");
                           setShowCategory(false);
                         }}
                       >
@@ -231,13 +222,8 @@ export default function Rehome() {
                 </div>
               </div>
             </div>
-            <div className="name w-1/3 p-2">
-              <label
-                htmlFor="discount"
-                className="pr-3 text-base text-blue-600"
-              >
-                4. Giống thú cưng
-              </label>
+            <div className="flex items-center p-2">
+              <p className="pr-3 text-base text-[black]">4. Giống thú cưng</p>
               <div className="relative inline-block text-left">
                 <div className="px-3 py-2 rounded-lg border-2 border-orange-200">
                   <button
@@ -245,7 +231,9 @@ export default function Rehome() {
                     onClick={() => setShowSubCategory(!showSubCategory)}
                     className="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
                   >
-                    Giống thú cưng
+                    {addPetSubcategoryName && addPetSubcategory !== ""
+                      ? addPetSubcategoryName
+                      : "Giống thú cưng"}
                     <svg
                       className="-mr-1 h-5 w-5 text-gray-400"
                       viewBox="0 0 20 20"
@@ -271,10 +259,10 @@ export default function Rehome() {
                       {addPetCategory === "6416ee6433df1b92e7fb8354"
                         ? itemCat?.subcategory?.map((e) => (
                             <li
-                              className="px-3 py-1 border border-b-[#383737a4]"
-                              onClick={(e) => {
+                              className="px-3 py-1 border border-b-[#383737a4] cursor-pointer"
+                              onClick={() => {
                                 setAddPetSubcategory(e._id);
-                                console.log(e.name);
+                                setAddPetSubcategoryName(e.name);
                                 setShowSubCategory(false);
                               }}
                             >
@@ -283,10 +271,10 @@ export default function Rehome() {
                           ))
                         : itemDog?.subcategory?.map((e) => (
                             <li
-                              className="px-3 py-1 border border-b-[#383737a4]"
+                              className="px-3 py-1 border border-b-[#383737a4] cursor-pointer"
                               onClick={() => {
                                 setAddPetSubcategory(e._id);
-                                console.log(e.name);
+                                setAddPetSubcategoryName(e.name);
                                 setShowSubCategory(false);
                               }}
                             >
@@ -298,39 +286,45 @@ export default function Rehome() {
                 </div>
               </div>
             </div>
-            <div className="name w-1/3 p-2"></div>
           </div>
-          <div className="flex flex-row gap-5 justify-center items-center w-11/12">
-            <div className="w-full p-2">
-              <label htmlFor="img" className="pr-3 text-base text-blue-600">
-                5. Ảnh minh hoạ (bạn đã chọn {addPetImages.length} ảnh)
-                <input
-                  type="file"
-                  id="img"
-                  name="img"
-                  multiple
-                  placeholder="Chọn ảnh thú cưng"
-                  accept="image/*"
-                  onChange={(e) => {
-                    setAddPetImages([
-                      ...addPetImages,
-                      ...Array.from(e.target.files),
-                    ]);
-                    console.log(e.target.files);
-                  }}
-                  className="px-3 py-2 max-w-full rounded-lg border-2 border-orange-200"
-                />
-              </label>
-            </div>
-            <div className="name w-1/3 p-2"></div>
+          <div className="flex items-center p-2">
+            <label
+              htmlFor="img"
+              className="flex flex-col max-w-[95%] text-base text-[black]"
+            >
+              5. Ảnh minh hoạ (bạn đã chọn {addPetImages.length} ảnh)
+              <input
+                type="file"
+                id="img"
+                name="img"
+                multiple
+                placeholder="Chọn ảnh thú cưng"
+                accept="image/*"
+                onChange={(e) => {
+                  setAddPetImages([
+                    ...addPetImages,
+                    ...Array.from(e.target.files),
+                  ]);
+                  console.log(e.target.files);
+                }}
+                className="px-3 py-2 max-w-full rounded-lg border-2 border-orange-200"
+              />
+            </label>
+            <Tippy content="Xoá tất cả">
+              <b className="cursor-pointer" onClick={() => setAddPetImages([])}>
+                X
+              </b>
+            </Tippy>
+            {console.log(addPetImages)}
           </div>
         </div>
-        <label htmlFor="discount" className="pl-10 text-base text-blue-600">
+
+        <p className="w-11/12 mx-auto pl-5 text-base text-[#4f2110]">
           6. Mô tả
-        </label>
-        <div className="w-11/12 mx-auto flex flex-col md:flex-row gap-3 py-1 rounded-lg bg-[#f9f8e0c8] p-1 lg:p-5 shadow-md min-h-[50vh]">
+        </p>
+        <div className="w-11/12 mx-auto flex flex-col md:flex-row gap-3 rounded-lg bg-[#f9f8e0c8] p-3 lg:p-5 shadow-md min-h-[50vh]">
           <div className=" w-full md:w-1/2 p-1 lg:p-5  bg-[#fdfddcc8] shadow-md shadow-[#c5c3a3] rounded-2xl">
-            <div className="h-full">
+            <div className="h-full ">
               <h3 className="text-md sm:text-md lg:text-lg font-medium">
                 Editor
               </h3>
@@ -347,11 +341,11 @@ export default function Rehome() {
             <h3 className="text-md sm:text-md lg:text-lg font-medium">
               Preview
             </h3>
-            <div className="name flex flex-col p-2 gap-5 break-all">
+            <div className=" flex flex-col p-2 gap-5 break-all max-h-[100vh] overflow-y-auto overflow-x-hidden">
               {addPetDescription}
             </div>
 
-            <div className="name flex flex-col p-2 gap-5">
+            <div className=" flex flex-col p-2 gap-5">
               <div className="flex flex-row justify-end items-center p-2 gap-5">
                 <Tippy content="Hoàn tất!" placement="bottom-start">
                   <div>
