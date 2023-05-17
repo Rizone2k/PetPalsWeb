@@ -67,23 +67,25 @@ const petPalsAPI = {
   },
   addPet: ({
     idUser,
-    addPetName,
-    addPetPrice,
-    addPetCategory,
-    addPetSubcategory,
-    addPetDescription,
-    addPetImages,
+    name,
+    price,
+    description,
+    category,
+    subcategory,
+    images,
   }) => {
-    const url = "/addPet";
-    return instance.post(url, {
-      idUser,
-      addPetName,
-      addPetPrice,
-      addPetCategory,
-      addPetSubcategory,
-      addPetDescription,
-      addPetImages,
+    const url = "/pet";
+    var formData = new FormData();
+    formData.append("idUser", idUser);
+    formData.append("name", name);
+    formData.append("price", price);
+    formData.append("category", category);
+    formData.append("subcategory", subcategory);
+    formData.append("description", description);
+    images.forEach((image, index) => {
+      formData.append(`image_${index}`, image);
     });
+    return instance.post(url, formData);
   },
 };
 
