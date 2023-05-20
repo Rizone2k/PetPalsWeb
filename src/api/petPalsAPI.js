@@ -1,13 +1,5 @@
 import instance from "./axios.config";
-
-// const query = {
-//   ...(limit && { limit }),
-//   ...(page && page !== "0" && { page }),
-//   ...(sort === 0 && { latest: "1" }),
-//   ...(sort === 1 && { latest: "0" }),
-//   ...(sort === 2 && { price: "asc" }),
-//   ...(sort === 3 && { price: "desc" }),
-// };
+import queryString from "query-string";
 
 const petPalsAPI = {
   // ~~~~~~~~~~~~~~Navigation~~~~~~~~~~~~~~~~//
@@ -32,39 +24,29 @@ const petPalsAPI = {
     return instance.get(url);
   },
 
+  filterPets: (param, limit = 15, page = 1, sort = 0) => {
+    // 0 === latest
+    const query = {};
+
+    if (sort == 0) {
+      query.latest = "1";
+    } else if (sort == 1) {
+      query.latest = "0";
+    } else if (sort == 2) {
+      query.price = "asc";
+    } else if (sort == 3) {
+      query.price = "desc";
+    }
+    const queryParams = queryString.stringify(query);
+    const url = `pet?subcategory=${param}&limit=${limit}&page=${page}&${queryParams}`;
+    return instance.get(url);
+  },
+
   getDetailPet: (param) => {
     const url = "pet/" + param;
     return instance.get(url);
   },
 
-  searchPet: (params, page = "1") => {
-    const url = "/pet/search?key=" + params + "&page=" + page;
-    return instance.get(url);
-  },
-  // ~~~~~~~~~~~~~~Product~~~~~~~~~~~~~~~~//
-
-  getProductList: (param, limit = 10, page = 1) => {
-    const url =
-      "product?subitem=" + param + "&limit=" + limit + "&page=" + page;
-    return instance.get(url);
-  },
-
-  getDetailProduct: (param) => {
-    const url = "product/" + param;
-    return instance.get(url);
-  },
-
-  checkout: ({ idUser, paymentMethod, fullName, email, address, phone }) => {
-    const url = "/checkout";
-    return instance.post(url, {
-      idUser,
-      paymentMethod,
-      fullName,
-      email,
-      address,
-      phone,
-    });
-  },
   addPet: ({
     idUser,
     name,
@@ -86,6 +68,46 @@ const petPalsAPI = {
       formData.append(`image_${index}`, image);
     });
     return instance.post(url, formData);
+  },
+  // ~~~~~~~~~~~~~~Product~~~~~~~~~~~~~~~~//
+
+  getProductList: (param, limit = 10, page = 1) => {
+    const url =
+      "product?subitem=" + param + "&limit=" + limit + "&page=" + page;
+    return instance.get(url);
+  },
+
+  getDetailProduct: (param) => {
+    const url = "product/" + param;
+    return instance.get(url);
+  },
+
+  filterProducts: (param, limit = 15, page = 1, sort = 0) => {
+    //0 === latest
+    const query = {};
+    if (sort == 0) {
+      query.latest = "1";
+    } else if (sort == 1) {
+      query.latest = "0";
+    } else if (sort == 2) {
+      query.price = "asc";
+    } else if (sort == 3) {
+      query.price = "desc";
+    }
+    const queryParams = queryString.stringify(query);
+    const url = `product?subitem=${param}&limit=${limit}&page=${page}&${queryParams}`;
+    return instance.get(url);
+  },
+  checkout: ({ idUser, paymentMethod, fullName, email, address, phone }) => {
+    const url = "/checkout";
+    return instance.post(url, {
+      idUser,
+      paymentMethod,
+      fullName,
+      email,
+      address,
+      phone,
+    });
   },
 };
 

@@ -31,7 +31,7 @@ export default function Home(props) {
     <div className="">
       <Banner></Banner>
       <Title title={"Thú cưng và các phụ kiện"}></Title>
-      <div className="flex flex-row justify-around items-center gap-5 py-5 px-2 lg:px-12">
+      <div className="flex flex-row justify-around items-center gap-5 py-5 px-2 lg:px-12 mx-auto max-w-[90%]">
         <AdsCard
           title={"Chó"}
           content={
@@ -86,11 +86,13 @@ export default function Home(props) {
         </div>
         <div className="flex w-full justify-end items-end">
           <Button
-            className="see-more bg-orange-200 text-[#da652f]"
+            className="see-more bg-orange-200 text-black"
             title="See more"
             type={"button"}
           >
-            <Link to={"/pet/6416ee5c33df1b92e7fb8351"}>Xem thêm {">>"}</Link>
+            <Link to={"/pet/6416ee5c33df1b92e7fb8351"}>
+              <p className="font-semibold text-sm">Xem thêm</p>
+            </Link>
           </Button>
         </div>
       </div>
@@ -120,11 +122,13 @@ export default function Home(props) {
         </div>
         <div className="flex w-full justify-end items-end">
           <Button
-            className="see-more bg-orange-200 text-[#ff793b]"
+            className="see-more bg-orange-200 text-black"
             title="See more"
             type={"button"}
           >
-            <Link to={"/pet/6416ee6433df1b92e7fb8354"}>Xem thêm {">>"}</Link>
+            <Link to={"/pet/6416ee6433df1b92e7fb8354"}>
+              <p className="font-semibold text-sm">Xem thêm</p>
+            </Link>
           </Button>
         </div>
       </div>

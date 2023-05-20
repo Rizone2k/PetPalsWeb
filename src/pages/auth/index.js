@@ -35,9 +35,9 @@ export default function Sign() {
   const [address, setAddress] = useState(currentUser.address || "None");
   window.scrollTo(0, 0);
 
-  // console.log("------------------------------------");
-  // console.log(info);
-  // console.log("------------------------------------");
+  console.log("------------------------------------");
+  console.log(currentUser.id);
+  console.log("------------------------------------");
 
   const handleCancel = () => {
     setDisable(true);

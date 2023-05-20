@@ -75,9 +75,14 @@ export default function Products() {
                 );
               })
             ) : (
-              <div className="w-full flex flex-col justify-center items-center h-40">
-                <p className="text-[#dd612f] font-extrabold text-2xl">
-                  Hiện tại chưa tìm thấy bất kỳ sản phẩm nào!
+              <div className="w-full flex flex-col justify-center items-center h-40 p-5">
+                <img
+                  width={150}
+                  src={require("~/assets/empty-product.jpg")}
+                  alt=""
+                />
+                <p className="text-[#dd612f] font-bold text-base lg:text-xl">
+                  Oop..... Xin lỗi! Hiện tại chưa tìm thấy bất kỳ sản phẩm nào!
                 </p>
               </div>
             )}

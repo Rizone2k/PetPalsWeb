@@ -209,13 +209,6 @@ export default function Detail() {
               </div>
             </div>
             <div className="price flex flex-row justify-between p-2 gap-5">
-              {param.param === "pet" && (
-                <p className="text-md lg:text-xl flex flex-row items-center font-extrabold">
-                  <FaMercury className="text-[#40fc69] text-xl lg:text-2xl"></FaMercury>
-                  {"\u00A0"}
-                  {randomValue}
-                </p>
-              )}
               <p className="text-md lg:text-xl font-extrabold flex flex-row items-center">
                 <span className="text-[#fab92d] text-xl lg:text-2xl">
                   ${"\u00A0"}
@@ -234,7 +227,11 @@ export default function Detail() {
                     alt={detail.owner.username}
                   />
                   {"\u00A0"}
-                  <p>{detail.owner.username}</p>
+                  <p>
+                    {detail.owner.username
+                      ? detail.owner.username
+                      : detail.owner.email}
+                  </p>
                 </div>
               </div>
             )}
@@ -246,7 +243,7 @@ export default function Detail() {
                   </p>
                 </Tippy>
                 {param.param === "pet" ? (
-                  <Tippy content="Adopt it!" placement="bottom-start">
+                  <Tippy content="Contact to owner!" placement="bottom-start">
                     <div>
                       <Button
                         type={"button"}
