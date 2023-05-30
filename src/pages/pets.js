@@ -68,7 +68,7 @@ export default function Pets(props) {
 
   return (
     <div>
-      <div className=" bg-[#f3f1cc]">
+      <div className=" bg-[#f8f7ddbf]">
         <div className="w-full flex flex-row justify-around">
           <div className="w-5/6 sm:w-1/2 md:w-3/5 bg-[#fdc243fd] rounded-r-2xl p-2 mb-5 ">
             <b className="text-sm lg:text-lg text-white flex flex-row items-center">
@@ -78,9 +78,7 @@ export default function Pets(props) {
           </div>
           <p>
             <b className="bg-[#fdc243fd] text-xs lg:text-lg text-white flex flex-row items-center rounded-xl px-3 py-2">
-              <a href="/pet" target="_black" title="See all">
-                All{" >"}
-              </a>
+              <Link to="/pet">All{" >"}</Link>
             </b>
           </p>
         </div>

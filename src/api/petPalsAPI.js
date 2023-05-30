@@ -69,6 +69,45 @@ const petPalsAPI = {
     });
     return instance.post(url, formData);
   },
+
+  getPetPosted: (idUser) => {
+    const url = "/pet/my-pet/" + idUser;
+    return instance.get(url);
+  },
+
+  updatePetPosted: ({
+    idUser,
+    name,
+    price,
+    description,
+    category,
+    subcategory,
+    images,
+  }) => {
+    const url = "/pet";
+    var formData = new FormData();
+    formData.append("idUser", idUser);
+    formData.append("name", name);
+    formData.append("price", price);
+    formData.append("category", category);
+    formData.append("subcategory", subcategory);
+    formData.append("description", description);
+    images.forEach((image, index) => {
+      formData.append(`image_${index}`, image);
+    });
+    return instance.put(url, formData);
+  },
+
+  deletePetImagesPosted: ({ idUser, images }) => {
+    const url = "/pet";
+    var formData = new FormData();
+    formData.append("idUser", idUser);
+    images.forEach((image, index) => {
+      formData.append(`image_${index}`, image);
+    });
+    return instance.put(url, formData);
+  },
+
   // ~~~~~~~~~~~~~~Product~~~~~~~~~~~~~~~~//
 
   getProductList: (param, limit = 10, page = 1) => {

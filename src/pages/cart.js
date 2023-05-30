@@ -175,7 +175,7 @@ export default function Cart(props) {
     <>
       {cart && (
         <div>
-          <div className=" bg-[#f3f1cc]">
+          <div className=" bg-[#f8f7ddbf]">
             <div className="w-full sm:w-1/2 md:w-3/5 bg-[#fdc243fd] rounded-r-2xl p-2 mb-5">
               <b className="text-sm lg:text-lg text-white flex flex-row items-center">
                 Giỏ hàng
@@ -282,7 +282,7 @@ export default function Cart(props) {
                       id={"pay"}
                       type={"button"}
                       onClick={handleShowPayment}
-                      className="bg-[#d7ab0c] text-white text-md md:text-lg font-extrabold p-2"
+                      className="bg-[#18c8829d] text-white text-md md:text-lg font-extrabold p-2"
                     >
                       <Tippy content="Thanh toán" placement="bottom">
                         <p>Thanh toán</p>
@@ -300,7 +300,7 @@ export default function Cart(props) {
           <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50">
             <div className=" w-[100vw] relative my-6">
               {/*content*/}
-              <div className="mx-auto border-0 rounded-lg shadow-lg relative flex flex-col w-2/3 lg:w-1/2 bg-[#ffefe1] py-12 px-5">
+              <div className="mx-auto border-0 rounded-lg shadow-lg relative flex flex-col w-2/3 lg:w-1/2 bg-[#f8f7ddbf] py-12 px-5">
                 {/*header*/}
                 <div className="flex flex-row items-center w-full lg:w-4/5">
                   <p className="font-bold text-lg">Hoá đơn thanh toán</p>
