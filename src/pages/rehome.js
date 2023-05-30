@@ -32,9 +32,13 @@ export default function Rehome() {
   const [showSubCategory, setShowSubCategory] = useState(false);
   const [itemDog, setItemDog] = useState([]);
   const [itemCat, setItemCat] = useState([]);
+  const [petPosted, setPetPosted] = useState([]);
   const ID_Cat = "6416ee6433df1b92e7fb8354";
   const ID_Dog = "6416ee5c33df1b92e7fb8351";
   const navigate = useNavigate();
+
+  console.log(petPosted);
+  console.log(currentUser.id);
 
   const modules = {
     toolbar: [
@@ -91,6 +95,11 @@ export default function Rehome() {
   };
 
   useEffect(() => {
+    const getPetPosted = async () => {
+      const res = await petPalsAPI.getPetPosted(currentUser.id);
+      console.log(res.data.data);
+      setPetPosted(res.data.data);
+    };
     const getPet = async (category, pet) => {
       try {
         const param = category;
@@ -103,11 +112,12 @@ export default function Rehome() {
     };
     getPet(ID_Cat, setItemCat);
     getPet(ID_Dog, setItemDog);
+    currentUser?.id && getPetPosted();
   }, []);
   // isLogin
   return isLogin
     ? itemCat && itemDog && (
-        <div className=" bg-[#f3f1cc]">
+        <div className=" bg-[#f8f7ddbf]">
           <div className="w-full sm:w-1/2 md:w-3/5 bg-[#fdc243fd] rounded-r-2xl p-2 mb-5">
             <b className="text-sm lg:text-lg text-white flex flex-row items-center">
               Rehome

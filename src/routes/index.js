@@ -5,6 +5,7 @@ import Detail from "~/pages/detail";
 import Sign from "~/pages/auth";
 import Cart from "~/pages/cart";
 import Rehome from "~/pages/rehome";
+import ReviewRehome from "~/pages/reviewRehome";
 
 const routes = {
   home: "/",
@@ -13,6 +14,7 @@ const routes = {
   profile: "/profile",
   cart: "/cart",
   rehome: "/rehome",
+  reviewRehome: "/rehome/review",
   products: "/products/:idProduct",
   productsNoIdProduct: "/products",
   detail: "/detail/:param/:id",
@@ -24,6 +26,7 @@ export const SetRoutes = [
   { path: routes.pets, components: Pets },
   { path: routes.cart, components: Cart },
   { path: routes.rehome, components: Rehome },
+  { path: routes.reviewRehome, components: ReviewRehome },
   { path: routes.petNoId, components: Pets },
   { path: routes.products, components: Products },
   { path: routes.productsNoIdProduct, components: Products },

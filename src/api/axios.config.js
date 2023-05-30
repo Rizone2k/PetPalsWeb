@@ -1,6 +1,27 @@
+import { unwrapResult } from "@reduxjs/toolkit";
 import axios from "axios";
 import Cookies from "js-cookie";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { logout } from "~/redux/reducers/auth";
+
+export const Config = (statusCode) => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  useEffect(() => {
+    const checkSesstion = () => {
+      dispatch(logout())
+        .then(unwrapResult)
+        .then(alert("Phiên đã hết hạn vui lòng đăng nhập lại!"))
+        .then(navigate("/profile"))
+        .catch((err) => console.log(err));
+    };
+    if (statusCode == 401) {
+      checkSesstion();
+    }
+  }, []);
+};
 
 const instance = axios.create({
   baseURL: "http://petpals.supervps.ga/api/v1/",
@@ -26,16 +47,15 @@ instance.interceptors.request.use(
   }
 );
 
+// Truyền hàm navigate vào HandleUnauthorized
 instance.interceptors.response.use(
   (response) => response,
   (error) => {
-    const statusCode = error.response ? error.response.status : null;
-    const navigate = useNavigate();
-    console.log(statusCode);
+    const statusCode = error?.response?.status ?? null;
     if (statusCode === 401) {
-      Cookies.set("LOGGED", false);
-      alert("Phiên đã hết hạn, vui lòng đăng nhập lại!") &&
-        navigate("/profile");
+      // const dispatch = useDispatch();
+
+      Config(statusCode);
     } else {
       throw error;
     }

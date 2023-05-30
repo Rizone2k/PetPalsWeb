@@ -19,10 +19,15 @@ import {
   FaAddressCard,
   FaShoppingBasket,
   FaHandHoldingHeart,
+  FaEdit,
 } from "react-icons/fa";
 import "./header.scss";
 import petPalsAPI from "~/api/petPalsAPI";
-import { currentCartSelector, isLoggedInSelector } from "~/redux/selectors";
+import {
+  currentCartSelector,
+  currentUserSelector,
+  isLoggedInSelector,
+} from "~/redux/selectors";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "~/redux/reducers/auth";
 import { unwrapResult } from "@reduxjs/toolkit";
@@ -30,6 +35,7 @@ import Button from "../button";
 
 function Header() {
   const isLogin = useSelector(isLoggedInSelector);
+  const currentUser = useSelector(currentUserSelector);
   const cart = useSelector(currentCartSelector);
   const [itemDogProduct, setItemDogProduct] = useState([]);
   const [itemCatProduct, setItemCatProduct] = useState([]);
@@ -44,6 +50,7 @@ function Header() {
   const [sort, setSort] = useState("0");
   const [filterResponse, setFilterResponse] = useState("");
   const [subCategory, setSubCategory] = useState("");
+  const [petPosted, setPetPosted] = useState([]);
   const [subItem, setSubItem] = useState("64171b66af4f228ec605d098");
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -66,6 +73,13 @@ function Header() {
       .catch((err) => console.log(err));
   };
 
+  useEffect(() => {
+    const getPetPosted = async () => {
+      const res = await petPalsAPI.getPetPosted(currentUser?.id);
+      setPetPosted(res.data.data);
+    };
+    currentUser?.id && getPetPosted();
+  }, [currentUser]);
   // Item pet for navigation and filter
   useEffect(() => {
     const getItemPet = async (category, pet) => {
@@ -119,7 +133,6 @@ function Header() {
           ? (response = await petPalsAPI.filterPets(subCategory, 15, 1, sort))
           : (response = await petPalsAPI.filterProducts(subItem, 15, 1, sort));
         setFilterResponse(response.data.data);
-        console.log(response.data.data);
         window.scrollTo(0, 0);
       } catch (error) {
         console.log(error);
@@ -427,10 +440,10 @@ function Header() {
                     <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
                   </svg>
                 </button>
-                <ul className="bg-[#f7ece0] dropdown-menu hidden absolute rounded shadow-lg shadow-indigo-500/40">
-                  <li className="block whitespace-no-wrap border-b border-[#f0bb7e]">
-                    <p className="px-2 text-center"> Chó</p>
-                    <ul className="rounded hidden w-52 absolute bg-[#f7ece0] shadow-lg shadow-indigo-500/40 left-full top-0">
+                <ul className="bg-[#f7ece0] dropdown-menu hidden absolute rounded shadow-lg shadow-slate-500/40">
+                  <li className="px-4 py-2 block whitespace-no-wrap border-b border-[#f0bb7e]">
+                    <p className="px-2 text-center cursor-pointer">Chó</p>
+                    <ul className="rounded hidden w-52 absolute bg-[#f7ece0] shadow-lg left-full top-0">
                       {itemDogProduct &&
                         itemDogProduct.slice(0, 10).map((item) => (
                           <Link to={`/products/${item._id}`} key={item._id}>
@@ -441,9 +454,9 @@ function Header() {
                         ))}
                     </ul>
                   </li>
-                  <li className="dropdown-new py-2 px-4 block whitespace-no-wrap border-b border-[#f0bb7e]">
-                    <p className="px-2 text-center"> Mèo</p>
-                    <ul className="rounded w-52 hidden absolute bg-[#f7ece0] shadow-lg shadow-indigo-500/40 left-full top-0">
+                  <li className="px-4 py-2 block whitespace-no-wrap border-b border-[#f0bb7e]">
+                    <p className="px-2 text-center cursor-pointer">Mèo</p>
+                    <ul className="rounded w-52 hidden absolute bg-[#f7ece0] shadow-lg left-full top-0">
                       {itemCatProduct &&
                         itemCatProduct.slice(0, 10).map((item) => (
                           <Link to={`/products/${item._id}`} key={item._id}>
@@ -471,14 +484,14 @@ function Header() {
                     <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />{" "}
                   </svg>
                 </button>
-                <ul className="bg-[#f7ece0] dropdown-menu hidden absolute rounded px-2 py-2">
+                <ul className="bg-[#f7ece0] dropdown-menu hidden absolute rounded shadow-lg shadow-slate-500/40">
                   <Link to={"/products/64171b66af4f228ec605d098"}>
-                    <li className="py-2 px-4 block whitespace-no-wrap border-b border-[#f0bb7e]">
+                    <li className="py-2 px-6 block whitespace-no-wrap border-b border-[#f0bb7e]">
                       Chó
                     </li>
                   </Link>
                   <Link to={"/products/64171bfeaf4f228ec605d0b8"}>
-                    <li className="py-2 px-4 block whitespace-no-wrap border-b border-[#f0bb7e]">
+                    <li className="py-2 px-6 block whitespace-no-wrap border-b border-[#f0bb7e]">
                       Mèo
                     </li>
                   </Link>
@@ -487,13 +500,39 @@ function Header() {
             </li>
           </ul>
           <ul className="w-1/6 sm:w-2/6 flex flex-row items-center justify-around">
-            <Tippy content="Rehome cho thú cưng">
-              <li>
-                <Link to={"/rehome"}>
-                  <FaHandHoldingHeart className="text-[#f8355f]" />
-                </Link>
-              </li>
-            </Tippy>
+            {petPosted.length > 0 ? (
+              <>
+                <div className="dropdown inline-block relative">
+                  <button className="py-2 rounded inline-flex items-center">
+                    <FaHandHoldingHeart />
+                  </button>
+                  <ul className="bg-[#f9f2e4d0] dropdown-menu hidden absolute rounded p-2 w-20 translate-x-[-30px]">
+                    <Tippy placement="bottom" content="New">
+                      <li className="py-2 px-2 flex justify-center whitespace-no-wrap border-b border-[#ebd3ba]">
+                        <Link to={"/rehome"}>
+                          <FaHandHoldingHeart className="text-[#f8355f]" />
+                        </Link>
+                      </li>
+                    </Tippy>
+                    <Tippy placement="bottom" content="Review">
+                      <li className="py-2 px-2 flex justify-center whitespace-no-wrap border-b border-[#ebd3ba]">
+                        <Link to={"/rehome/review"}>
+                          <FaEdit className="text-[#2cca8d]" />
+                        </Link>
+                      </li>
+                    </Tippy>
+                  </ul>
+                </div>
+              </>
+            ) : (
+              <Tippy content="Rehome cho thú cưng">
+                <li>
+                  <Link to={"/rehome"}>
+                    <FaHandHoldingHeart className="text-[#f8355f]" />
+                  </Link>
+                </li>
+              </Tippy>
+            )}
             <Tippy content="Search">
               <li className="cursor-pointer" onClick={handleShowSearch}>
                 <FaSearch />
@@ -514,7 +553,7 @@ function Header() {
                       <FaUserCircle />
                     </span>
                   </button>
-                  <ul className="bg-[#f1e4d5e7] dropdown-menu hidden absolute rounded p-2 w-20 translate-x-[-30px]">
+                  <ul className="bg-[#f9f2e4d0] dropdown-menu hidden absolute rounded p-2 w-20 translate-x-[-30px]">
                     <Tippy placement="right" content="Info">
                       <li className="py-2 px-2 flex justify-center whitespace-no-wrap border-b border-[#ebd3ba]">
                         <Link to={"/profile"}>
@@ -580,11 +619,53 @@ function Header() {
                 {/*body*/}
                 <div className="relative px-6 flex-auto ul-nav-show">
                   <ul className="gap-5 w-full p-2">
-                    <Link to={"/rehome"}>
-                      <li>
-                        <FaHandHoldingHeart /> <b>Rehome</b>
-                      </li>
-                    </Link>
+                    {isLogin ? (
+                      <>
+                        <div className="dropdown inline-block relative">
+                          <button className="py-2 rounded inline-flex items-center">
+                            <span className="mr-1">
+                              <FaUserCircle />
+                            </span>
+                          </button>
+                          <ul className="bg-[#f9f2e4d0] dropdown-menu hidden absolute rounded p-2 w-20 translate-x-[-30px]">
+                            <Tippy placement="right" content="Info">
+                              <li className="py-2 px-2 flex justify-center whitespace-no-wrap border-b border-[#ebd3ba]">
+                                <Link to={"/profile"}>
+                                  <FaAddressCard className="text-[#2bb972]" />
+                                </Link>
+                              </li>
+                            </Tippy>
+                            <Tippy placement="right" content="Logout">
+                              <li
+                                className="py-2 px-2 flex justify-center whitespace-no-wrap border-b border-[#ebd3ba]"
+                                onClick={handleLogOutClick}
+                              >
+                                <FaDoorOpen className="text-[#b94c2b]" />
+                              </li>
+                            </Tippy>
+                          </ul>
+                        </div>
+                        <Tippy content="Giỏ hàng">
+                          <li className="relative inline-block cursor-pointer">
+                            <div
+                              className={` ${
+                                cart && cart.length > 0 ? "notice-bell" : ""
+                              }`}
+                            >
+                              <Link to={"/cart"}>
+                                <FaShoppingBasket />
+                              </Link>
+                            </div>
+                          </li>
+                        </Tippy>
+                      </>
+                    ) : (
+                      <Link to={"/rehome"}>
+                        <li>
+                          <FaHandHoldingHeart /> <b>Rehome</b>
+                        </li>
+                      </Link>
+                    )}
                     <li onClick={handleShowSearch}>
                       <FaSearch /> <b>Search</b>
                     </li>
@@ -644,7 +725,6 @@ function Header() {
                         </ul>
                       </div>
                     </li>
-
                     <li>
                       <div className="dropdown relative flex flex-row">
                         <button className="py-2 rounded inline-flex items-center">

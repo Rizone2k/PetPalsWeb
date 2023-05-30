@@ -86,7 +86,7 @@ export default function Home(props) {
         </div>
         <div className="flex w-full justify-end items-end">
           <Button
-            className="see-more bg-orange-200 text-black"
+            className="see-more bg-[#edcd9083] text-black"
             title="See more"
             type={"button"}
           >
@@ -122,7 +122,7 @@ export default function Home(props) {
         </div>
         <div className="flex w-full justify-end items-end">
           <Button
-            className="see-more bg-orange-200 text-black"
+            className="see-more bg-[#edcd9083] text-black"
             title="See more"
             type={"button"}
           >
