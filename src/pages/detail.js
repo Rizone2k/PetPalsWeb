@@ -47,7 +47,6 @@ export default function Detail() {
     return randomNumber < 0.5 ? "Đực" : "Cái";
   };
   randomValue();
-  // console.log("currentUser", param.id);
 
   const handleAddCart = () => {
     if (isLoggedIn) {
@@ -87,8 +86,6 @@ export default function Detail() {
           } else {
             navigate("/");
           }
-
-          // console.log(response.data.data);
         }
       } catch (error) {
         console.log(error);

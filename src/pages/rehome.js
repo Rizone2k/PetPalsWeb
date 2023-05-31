@@ -37,9 +37,6 @@ export default function Rehome() {
   const ID_Dog = "6416ee5c33df1b92e7fb8351";
   const navigate = useNavigate();
 
-  console.log(petPosted);
-  console.log(currentUser.id);
-
   const modules = {
     toolbar: [
       [{ header: [1, 2, 3, 4, 5, 6, false] }],
@@ -84,7 +81,7 @@ export default function Rehome() {
           setAddPetName("");
           setAddPetPrice(0);
         } else {
-          console.log(rs.data);
+          console.log("error!");
         }
       } else {
         alert("Vui lòng nhập đủ thông tin!");
@@ -97,7 +94,6 @@ export default function Rehome() {
   useEffect(() => {
     const getPetPosted = async () => {
       const res = await petPalsAPI.getPetPosted(currentUser.id);
-      console.log(res.data.data);
       setPetPosted(res.data.data);
     };
     const getPet = async (category, pet) => {

@@ -51,8 +51,6 @@ export default function Cart(props) {
   const [totalNew, setTotalNew] = useState();
   const dispatch = useDispatch();
 
-  console.log(cart);
-  console.log(items);
   // const navigation = useNavigate();
   const currentUser = useSelector(currentUserSelector);
   const handleUpdateCart = (idProduct, quantity) => {
@@ -67,7 +65,6 @@ export default function Cart(props) {
       cart.map((e) => (sum += parseInt(e.quantity * e.product.price)));
       total = sum;
     }
-    console.log(idProduct, quantity);
     dispatch(updateCart({ idUser: currentUser.id, idProduct, quantity }))
       .then(unwrapResult)
       .then((result) => {
@@ -115,9 +112,7 @@ export default function Cart(props) {
                 price: item.price,
               };
             });
-            // console.log("products", products);
             setItems(products);
-            // console.log(getProductRes);
           } else {
             console.log("Lỗi khi lấy thông tin sản phẩm");
           }

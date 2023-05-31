@@ -175,7 +175,6 @@ function Header() {
                             (item) => item.name === selectedOption
                           );
                           if (selectedItem) {
-                            console.log("click");
                             setAnimal(selectedItem.name);
                           }
                         }}
@@ -361,12 +360,12 @@ function Header() {
                                 src={item.thumb}
                                 alt="Dog"
                               />
-                              <did className="flex flex-col">
+                              <div className="flex flex-col">
                                 <p className="font-semibold"> {item.name}</p>
                                 <p className="text-[#22478b]">
                                   Giá: {item.price.toLocaleString()}
                                 </p>
-                              </did>
+                              </div>
                             </div>
                           </Link>
                         </li>
