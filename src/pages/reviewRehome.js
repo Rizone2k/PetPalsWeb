@@ -21,6 +21,7 @@ export default function ReviewRehome() {
   const [addPetSubcategory, setAddPetSubcategory] = useState("");
   const [addPetSubcategoryName, setAddPetSubcategoryName] = useState("");
   const [addPetDescription, setAddPetDescription] = useState("");
+  const [addPetImagesFromUser, setAddPetImagesFromUser] = useState([]);
   const [addPetImages, setAddPetImages] = useState([]);
   const [showCategory, setShowCategory] = useState(false);
   const [showSubCategory, setShowSubCategory] = useState(false);
@@ -28,15 +29,12 @@ export default function ReviewRehome() {
   const [itemCat, setItemCat] = useState([]);
   const [petPosted, setPetPosted] = useState([]);
   const [openCollapse, setOpenCollapse] = useState(true);
+  const [update, setUpdate] = useState(true);
   const [petPostedSelectedId, setPetPostedSelectedId] = useState("");
   const [petPostedSelected, setPetPostedSelected] = useState("");
   const ID_Cat = "6416ee6433df1b92e7fb8354";
   const ID_Dog = "6416ee5c33df1b92e7fb8351";
   const navigate = useNavigate();
-
-  console.log("petPostedSelectedID", petPostedSelectedId);
-  console.log("petPostedSelected", petPostedSelected);
-  console.log("addPetSubcategoryName", addPetSubcategoryName);
 
   const modules = {
     toolbar: [
@@ -55,63 +53,84 @@ export default function ReviewRehome() {
     ],
   };
 
-  const handleRehome = async () => {
-    // try {
-    //   if (
-    //     addPetName.length >= 3 &&
-    //     addPetPrice >= 1 &&
-    //     addPetCategory.length >= 3 &&
-    //     addPetSubcategory.length >= 3 &&
-    //     addPetDescription.length >= 3 &&
-    //     addPetImages.length >= 1
-    //   ) {
-    //     const rs = await petPalsAPI.addPet({
-    //       idUser: currentUser.id,
-    //       name: addPetName,
-    //       price: addPetPrice,
-    //       category: addPetCategory,
-    //       subcategory: addPetSubcategory,
-    //       description: addPetDescription,
-    //       images: addPetImages,
-    //     });
-    //     if (rs.data.status === "success") {
-    //       alert("Thành công, thú cưng của bạn đang chờ được nhận nuôi!");
-    //       setAddPetDescription("");
-    //       setAddPetImages([]);
-    //       setAddPetName("");
-    //       setAddPetPrice(0);
-    //     } else {
-    //       console.log(rs.data);
-    //     }
-    //   } else {
-    //     alert("Vui lòng nhập đủ thông tin!");
-    //   }
-    // } catch (error) {
-    //   console.log(error);
-    // }
+  const handleEditRehome = async () => {
+    try {
+      if (
+        addPetName.length >= 3 &&
+        addPetPrice >= 1 &&
+        addPetCategory.length >= 3 &&
+        addPetSubcategory.length >= 3 &&
+        addPetDescription.length >= 3 &&
+        addPetImagesFromUser.length >= 1
+      ) {
+        const rs = await petPalsAPI.updatePetPosted(
+          {
+            idUser: currentUser.id,
+            name: addPetName,
+            price: addPetPrice,
+            description: addPetDescription,
+            category: addPetCategory,
+            subcategory: addPetSubcategory,
+            images: addPetImagesFromUser,
+          },
+          petPostedSelectedId
+        );
+        if (rs.data.status === "success") {
+          setUpdate(!update);
+          alert("Oke đã update!");
+        } else {
+          console.log("Error!");
+        }
+      } else {
+        alert("Vui lòng nhập đủ thông tin!");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const handleDeletePetImagesPosted = async (e) => {
+    try {
+      if (e.length >= 1) {
+        const rs = await petPalsAPI.deletePetImagesPosted(
+          {
+            idUser: currentUser.id,
+            image: e,
+          },
+          petPostedSelectedId
+        );
+        if (rs.data.status === "success") {
+          setUpdate(!update);
+          alert("Oke đã update!");
+        } else {
+        }
+      } else {
+        alert("Vui lòng nhập đủ thông tin!");
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   useEffect(() => {
     let result = petPosted.filter((item) => item._id == petPostedSelectedId);
     setPetPostedSelected(result[0]);
-  }, [petPosted, petPostedSelectedId]);
+  }, [petPosted, petPostedSelectedId, update]);
+
   useEffect(() => {
     if (petPostedSelected) {
       setAddPetName(petPostedSelected?.name ?? "");
       setAddPetPrice(petPostedSelected?.price ?? "");
-      setPetCategory(petPostedSelected?.category?.name ?? "");
-      setPetCategory(petPostedSelected?.category?.name ?? "");
+      setPetCategory(petPostedSelected?.category?._id ?? "");
       setAddPetSubcategory(petPostedSelected?.subcategory?._id ?? "");
       setAddPetSubcategoryName(petPostedSelected?.subcategory?.name ?? "");
       setAddPetDescription(petPostedSelected?.description ?? "");
       setAddPetImages(petPostedSelected?.images ?? "");
     }
-  }, [petPostedSelected]);
+  }, [petPostedSelected, update]);
 
   useEffect(() => {
     const getPetPosted = async () => {
       const res = await petPalsAPI.getPetPosted(currentUser.id);
-      console.log(res.data.data);
       setPetPosted(res.data.data);
     };
     const getPet = async (category, pet) => {
@@ -127,7 +146,7 @@ export default function ReviewRehome() {
     getPet(ID_Cat, setItemCat);
     getPet(ID_Dog, setItemDog);
     currentUser?.id && getPetPosted();
-  }, []);
+  }, [currentUser.id, update]);
 
   const HandleTime = (dateTimeString) => {
     const duration = moment.duration(
@@ -413,35 +432,56 @@ export default function ReviewRehome() {
                   </div>
                 </div>
                 <div className="flex items-center p-2">
-                  <label
-                    htmlFor="img"
-                    className="flex flex-col max-w-[95%] text-base text-[black]"
-                  >
-                    5. Ảnh minh hoạ (bạn đã chọn {addPetImages.length} ảnh)
-                    <input
-                      type="file"
-                      id="img"
-                      name="img"
-                      multiple
-                      placeholder="Chọn ảnh thú cưng"
-                      accept="image/*"
-                      onChange={(e) => {
-                        setAddPetImages([
-                          ...addPetImages,
-                          ...Array.from(e.target.files),
-                        ]);
-                      }}
-                      className="px-3 py-2 max-w-full rounded-lg border-2 border-orange-200"
-                    />
-                  </label>
-                  <Tippy content="Xoá tất cả">
-                    <b
-                      className="cursor-pointer"
-                      onClick={() => setAddPetImages([])}
+                  <div className="w-1/3">
+                    <label
+                      htmlFor="img"
+                      className="flex flex-col max-w-[95%] text-base text-[black]"
                     >
-                      X
-                    </b>
-                  </Tippy>
+                      5. Ảnh minh hoạ (bạn đã chọn {addPetImages.length} ảnh)
+                      <input
+                        type="file"
+                        id="img"
+                        name="img"
+                        multiple
+                        placeholder="Chọn ảnh thú cưng"
+                        accept="image/*"
+                        onChange={(e) => {
+                          setAddPetImagesFromUser([
+                            ...addPetImagesFromUser,
+                            ...Array.from(e.target.files),
+                          ]);
+                        }}
+                        className="px-3 py-2 max-w-full rounded-lg border-2 border-orange-200"
+                      />
+                    </label>
+                    <small>
+                      *<u>Lưu ý</u>: Ảnh sẽ được tự động cập nhật khi có thay
+                      đổi
+                    </small>
+                  </div>
+
+                  <div className="flex flex-row w-2/3 items-center gap-5 overflow-x-auto">
+                    {addPetImages.map((e) => (
+                      <span
+                        className="relative bg-[#fbc76ec2] p-1 shadow-slate-700 shadow-md"
+                        key={e}
+                      >
+                        <img
+                          width={100}
+                          src={`http://petpals.supervps.ga/media/image/${e}`}
+                          alt="a"
+                        />
+                        <Tippy content="Loại bỏ">
+                          <b
+                            className="cursor-pointer absolute top-0 right-1 text-[#620707d7]"
+                            onClick={() => handleDeletePetImagesPosted(e)}
+                          >
+                            X
+                          </b>
+                        </Tippy>
+                      </span>
+                    ))}
+                  </div>
                 </div>
               </div>
 
@@ -477,7 +517,7 @@ export default function ReviewRehome() {
                         <div>
                           <Button
                             type={"button"}
-                            onClick={handleRehome}
+                            onClick={handleEditRehome}
                             className="bg-[#0ce495] text-white text-md md:text-lg font-extrabold p-2"
                           >
                             Xong

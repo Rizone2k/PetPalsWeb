@@ -274,9 +274,6 @@ export const addCart = createAsyncThunk(
 export const updateCart = createAsyncThunk(
   "auth/updateCart",
   async ({ idUser, idProduct, quantity }, { rejectWithValue }) => {
-    console.log("------------------------------------");
-    console.log(idUser, idProduct, quantity);
-    console.log("------------------------------------");
     try {
       const res = await instance.post(`/cart/update`, {
         idUser,

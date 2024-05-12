@@ -75,16 +75,11 @@ const petPalsAPI = {
     return instance.get(url);
   },
 
-  updatePetPosted: ({
-    idUser,
-    name,
-    price,
-    description,
-    category,
-    subcategory,
-    images,
-  }) => {
-    const url = "/pet";
+  updatePetPosted: (
+    { idUser, name, price, description, category, subcategory, images },
+    idPet
+  ) => {
+    const url = `/pet/${idPet}`;
     var formData = new FormData();
     formData.append("idUser", idUser);
     formData.append("name", name);
@@ -98,14 +93,9 @@ const petPalsAPI = {
     return instance.put(url, formData);
   },
 
-  deletePetImagesPosted: ({ idUser, images }) => {
-    const url = "/pet";
-    var formData = new FormData();
-    formData.append("idUser", idUser);
-    images.forEach((image, index) => {
-      formData.append(`image_${index}`, image);
-    });
-    return instance.put(url, formData);
+  deletePetImagesPosted: ({ idUser, image }, idPet) => {
+    const url = `/pet/image/${idPet}`;
+    return instance.put(url, { idUser, image });
   },
 
   // ~~~~~~~~~~~~~~Product~~~~~~~~~~~~~~~~//

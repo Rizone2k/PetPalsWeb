@@ -19,7 +19,6 @@ const SignInForm = (title) => {
       password: "",
     },
     onSubmit: (values) => {
-      // console.log(values);
       if (values) {
         dispatch(login(values))
           .then(unwrapResult)
@@ -45,7 +44,6 @@ const SignInForm = (title) => {
         .min(3, "Mật khẩu tối thiểu phải có 3 ký tự!"),
     }),
   });
-  // console.log(formik.errors);
 
   return title.title === "Sign In" ? (
     <section className="bg-[#fceab8ea] w-5/6 md:w-2/3 lg:w-3/6 mx-auto rounded-lg p-3 flex flex-col justify-center items-center">

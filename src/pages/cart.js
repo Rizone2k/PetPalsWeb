@@ -93,9 +93,6 @@ export default function Cart(props) {
   const [statusOrder, setStatusOrder] = useState(false);
   const [copied, setCopied] = useState(false);
 
-  // console.log(idOrder);
-  // console.log(statusOrder);
-
   const handleShowPayment = () => {
     setShowSearch(!showSearch);
   };
@@ -106,12 +103,6 @@ export default function Cart(props) {
   };
 
   const handleCheckout = async () => {
-    // console.log(fullName);
-    // console.log(address);
-    // console.log(phone);
-    // console.log(email);
-    // console.log(paymentMethod);
-    // console.log(" currentUser.id", currentUser.id);
     if (
       email.length >= 3 &&
       fullName.length >= 2 &&
@@ -134,8 +125,6 @@ export default function Cart(props) {
               setIdOrder(rs.data.data);
               setShowSearch(false);
               setStatusOrder(true);
-              console.log(idOrder);
-              console.log(statusOrder);
             })
             .catch((err) => {
               console.log(err);

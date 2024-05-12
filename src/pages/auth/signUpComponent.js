@@ -20,7 +20,6 @@ const SignUpForm = (title) => {
       confirmedPassword: "",
     },
     onSubmit: (values) => {
-      // console.log("user's input", values);
       if (values) {
         const user = {
           email: values.email,
@@ -66,7 +65,6 @@ const SignUpForm = (title) => {
         .oneOf([Yup.ref("password"), null], "Mật khẩu không khớp!"),
     }),
   });
-  // console.log(formik.errors);
 
   return title.title === "Sign Up" ? (
     <section className="bg-[#fceab8ea] w-5/6 md:w-2/3 lg:w-3/6 mx-auto rounded-lg p-3 flex flex-col justify-center items-center">

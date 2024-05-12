@@ -42,27 +42,4 @@ function App() {
   );
 }
 
-// eslint-disable-next-line no-lone-blocks
-{
-  /* <div className="wrap bg-blue-50">
-    <Button
-      className={"btn-test"}
-      type={"submit"}
-      onClick={() => console.log("Test")}
-      title={"Click me"}
-    >
-      CLick me!
-    </Button>
-    <div className="flex flex-col absolute top-0 right-0">
-      <AlertDanger
-        title={"Holy smokes!"}
-        content={"Something seriously bad happened."}
-      ></AlertDanger>
-      <AlertSuccess
-        title={"Holy smokes!"}
-        content={"Something seriously bad happened."}
-      ></AlertSuccess>
-    </div>
-  </div> */
-}
 export default App;
